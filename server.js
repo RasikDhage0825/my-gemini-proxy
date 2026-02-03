@@ -16,7 +16,7 @@ app.post('/gemini', async (req, res) => {
         // 2. Prepare the request for Google Gemini
         // We use the "gemini-1.5-flash" model (it's fast and free/cheap)
         const API_KEY = process.env.GEMINI_API_KEY;
-        const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${API_KEY}`;
 
         // 3. Send data to Gemini
         const response = await fetch(apiURL, {
