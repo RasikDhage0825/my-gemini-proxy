@@ -20,8 +20,8 @@ app.post('/gemini', async (req, res) => {
                 "Authorization": `Bearer ${GROQ_API_KEY}`
             },
             body: JSON.stringify({
-                // Groq supports Llama 3 and Mixtral. Llama 3 is great for chat.
-                model: "llama3-8b-8192", 
+                // 👇 UPDATED MODEL NAME (The old one was deleted by Groq)
+                model: "llama-3.1-8b-instant", 
                 messages: [
                     { 
                         role: "system", 
@@ -43,7 +43,6 @@ app.post('/gemini', async (req, res) => {
             return res.json({ reply: "Error from Groq: " + data.error.message });
         }
 
-        // Groq uses the same response format as OpenAI
         const botReply = data.choices[0].message.content;
         
         res.json({ reply: botReply });
