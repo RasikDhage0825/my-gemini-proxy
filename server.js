@@ -1,53 +1,53 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch'); // Uses the v2 you installed
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// This is the route your frontend will call
-app.post('/gemini', async (req, res) => {
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+app.post('/gemini', async (req, res) => { // Keeping route name '/gemini' so frontend doesn't break
     try {
-        // 1. Get the message from your frontend
         const userMessage = req.body.message;
 
-        // 2. Prepare the request for Google Gemini
-        // We use the "gemini-1.5-flash" model (it's fast and free/cheap)
-        const API_KEY = process.env.GEMINI_API_KEY;
-        const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${API_KEY}`;
-
-        // 3. Send data to Gemini
-        const response = await fetch(apiURL, {
-            method: 'POST',
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: userMessage }]
-                }]
+                model: "gpt-3.5-turbo", // Cost-effective and fast
+                messages: [
+                    { role: "system", content: "You are a helpful assistant." },
+                    { role: "user", content: userMessage }
+                ]
             })
         });
 
         const data = await response.json();
 
-        // 4. Handle errors if Gemini rejects the request
-        if (!response.ok) {
-            console.error("Gemini Error:", data);
-            return res.status(500).json({ error: data.error.message || "Error from Gemini" });
+        // Check for OpenAI specific errors
+        if (data.error) {
+            console.error("OpenAI Error:", data.error);
+            return res.json({ reply: "Error from OpenAI: " + data.error.message });
         }
 
-        // 5. Send just the answer text back to your frontend
-        const botReply = data.candidates[0].content.parts[0].text;
+        // Extract the actual text reply
+        const botReply = data.choices[0].message.content;
+        
         res.json({ reply: botReply });
 
     } catch (error) {
         console.error("Server Error:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ reply: "Error connecting to server." });
     }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
