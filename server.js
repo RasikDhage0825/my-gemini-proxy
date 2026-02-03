@@ -1,42 +1,49 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch'); // Uses the v2 you installed
+const fetch = require('node-fetch');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-app.post('/gemini', async (req, res) => { // Keeping route name '/gemini' so frontend doesn't break
+app.post('/gemini', async (req, res) => {
     try {
         const userMessage = req.body.message;
 
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${OPENAI_API_KEY}`
+                "Authorization": `Bearer ${GROQ_API_KEY}`
             },
             body: JSON.stringify({
-                model: "gpt-3.5-turbo", // Cost-effective and fast
+                // Groq supports Llama 3 and Mixtral. Llama 3 is great for chat.
+                model: "llama3-8b-8192", 
                 messages: [
-                    { role: "system", content: "You are a helpful assistant." },
-                    { role: "user", content: userMessage }
+                    { 
+                        role: "system", 
+                        content: "You are a helpful and friendly electronics tutor." 
+                    },
+                    { 
+                        role: "user", 
+                        content: userMessage 
+                    }
                 ]
             })
         });
 
         const data = await response.json();
 
-        // Check for OpenAI specific errors
+        // Error handling
         if (data.error) {
-            console.error("OpenAI Error:", data.error);
-            return res.json({ reply: "Error from OpenAI: " + data.error.message });
+            console.error("Groq Error:", data.error);
+            return res.json({ reply: "Error from Groq: " + data.error.message });
         }
 
-        // Extract the actual text reply
+        // Groq uses the same response format as OpenAI
         const botReply = data.choices[0].message.content;
         
         res.json({ reply: botReply });
