@@ -6,6 +6,12 @@ const fetch = require('node-fetch');
 const app = express();
 app.use(express.json());
 app.use(cors());
+const path = require('path');
+
+// This tells Express to serve your index.html file when someone visits the home page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
