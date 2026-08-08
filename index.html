@@ -352,9 +352,426 @@
         /* Thin Scrollbar for the info box */
         .assistant-content::-webkit-scrollbar { width: 4px; }
         .assistant-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+
+        /* =====================================================================
+           MODERN PROFESSIONAL THEME + NEOMORPHISM
+           Clean SaaS layout with soft dual-tone "neumorphic" shadows layered
+           on top (light highlight + soft dark shadow) for depth, while still
+           keeping enough tonal contrast between cards/background that
+           nothing blends away. Inputs deliberately keep a real, visible
+           border so the assistant boxes' focus:border-* utilities work.
+           ===================================================================== */
+        :root {
+            --app-bg: #e9edf3;
+            --app-surface: #f6f8fb;
+            --app-border: #e2e8f0;
+            --app-border-strong: #cbd5e1;
+            --app-accent: #2563eb;
+            --app-accent-dark: #1d4ed8;
+            --neo-light: rgba(255, 255, 255, 0.85);
+            --neo-dark: rgba(163, 177, 198, 0.55);
+            --app-shadow: 5px 5px 12px var(--neo-dark), -5px -5px 12px var(--neo-light);
+            --app-shadow-md: 8px 8px 18px var(--neo-dark), -8px -8px 18px var(--neo-light);
+            --app-shadow-inset: inset 3px 3px 7px var(--neo-dark), inset -3px -3px 7px var(--neo-light);
+            --app-dark-bg: #0f172a;
+            --app-dark-surface: #172033;
+            --app-dark-border: #2a3552;
+        }
+
+        body { background-color: var(--app-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+
+        /* ---- Neumorphic cards: any bg-white + rounded-xl panel ---- */
+        .bg-white.rounded-xl {
+            background: var(--app-surface);
+            border: none;
+            border-radius: 18px;
+            box-shadow: var(--app-shadow);
+        }
+        .bg-white.rounded-xl.shadow-inner { box-shadow: var(--app-shadow-inset); }
+
+        .bg-slate-dark.rounded-xl {
+            background: var(--app-dark-bg);
+            border: 1px solid var(--app-dark-border);
+            border-radius: 18px;
+            box-shadow: var(--app-shadow-md);
+        }
+
+        /* ---- Teacher / Friend assistant panels: keep their tint,
+               modern flat "alert card" look with a clear left accent ---- */
+        .teacher-panel, .friend-panel {
+            border-left: 4px solid var(--app-accent);
+            border-radius: 10px;
+            background: #f8fafc;
+            box-shadow: var(--app-shadow-inset);
+        }
+        .friend-panel { border-left-color: #10B981; }
+
+        .chat-bubble {
+            border-radius: 10px;
+            box-shadow: var(--app-shadow);
+        }
+
+        .assistant-info-box {
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            box-shadow: var(--app-shadow);
+        }
+
+        /* ---- Component palette buttons: clean icon+label tiles ---- */
+        .component-button {
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: var(--app-shadow);
+            text-shadow: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+        .component-button:hover { transform: translateY(-1px); box-shadow: var(--app-shadow-md); }
+        .component-button:active { transform: translateY(0); box-shadow: inset 0 1px 3px rgba(0,0,0,0.25); }
+
+        /* Generic rule for rounded, shadowed CTA buttons across the lab */
+        button[class*="rounded"][class*="shadow"]:not(#bench-switch-btn) {
+            box-shadow: var(--app-shadow);
+            border: none;
+            transition: all 0.15s ease;
+        }
+        button[class*="rounded"][class*="shadow"]:not(#bench-switch-btn):hover {
+            box-shadow: var(--app-shadow-md);
+            transform: translateY(-1px);
+        }
+        button[class*="rounded"][class*="shadow"]:not(#bench-switch-btn):active {
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.25);
+            transform: translateY(0);
+        }
+        #bench-switch-btn { box-shadow: var(--app-shadow-md); }
+
+        /* ---- Text/number inputs: clean flat fields.
+               A real, visible border is kept (not "none") so the assistant's
+               focus:border-blue-400 / focus:border-green-500 utilities still
+               show focus correctly. ---- */
+        input[type="text"], input[type="number"] {
+            background: #ffffff;
+            border: 1px solid var(--app-border-strong);
+            border-radius: 8px;
+            box-shadow: var(--app-shadow-inset);
+        }
+
+        /* ---- Circuit canvas frame ---- */
+        #canvas-container {
+            border: 1px solid var(--app-border);
+            border-radius: 14px;
+            box-shadow: var(--app-shadow-md);
+        }
+
+        /* ---- Digital I/O indicators & retro readout keep an authentic
+               "instrument display" inset look ---- */
+        .io-indicator { box-shadow: inset 0 1px 4px rgba(0,0,0,0.5); }
+        .digital-screen { box-shadow: inset 0 2px 6px rgba(0,0,0,0.6); border: 1px solid #0f172a; }
+
+        /* ---- Experiment 1 modal: clean dark surfaces ---- */
+        .exp1-header { background: var(--app-dark-bg); border-bottom: 1px solid var(--app-dark-border); }
+        .exp1-sidebar { background: var(--app-dark-surface); border-right: 1px solid var(--app-dark-border); }
+        .exp1-sidebar button { border-radius: 8px; margin: 2px 10px; }
+        .exp1-sidebar button.active-tab { background: rgba(37, 99, 235, 0.15); border-left-color: var(--app-accent); }
+        .exp1-workplace { background: var(--app-dark-surface); border-left: 1px solid var(--app-dark-border); }
+        .exp1-center { background-color: var(--app-bg); }
+        .fullscreen-modal { background: var(--app-bg); }
+
+        /* =====================================================================
+           FULL-SCREEN LAYOUT
+           ===================================================================== */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+        }
+        body {
+            padding: 10px !important; /* set to 0 for absolute edge-to-edge */
+        }
+        .max-w-6xl {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        /* =====================================================================
+           MEASUREMENTS LAB: realistic bench-instrument look for the
+           CRO (oscilloscope) and Function Generator front panels.
+           ===================================================================== */
+        .cro-instrument, .fg-instrument {
+            background: linear-gradient(160deg, #3a3f4b, #23262e);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+            border: 1px solid #1a1c22;
+        }
+        .cro-instrument-brand, .fg-instrument-brand {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #e2e8f0;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .cro-instrument-brand span, .fg-instrument-brand span {
+            font-weight: 400;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-left: 8px;
+            letter-spacing: 0.5px;
+        }
+        .cro-screen-bezel {
+            background: #111318;
+            border-radius: 10px;
+            padding: 12px;
+            border: 3px solid #05060a;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.7);
+        }
+        #cro-canvas {
+            width: 100%;
+            display: block;
+            background: #0a1f0f;
+            border-radius: 4px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.7);
+        }
+        .cro-readout {
+            background: #1a1d24;
+            border: 1px solid #333846;
+            border-radius: 6px;
+            padding: 4px;
+            color: #94a3b8;
+        }
+        .cro-readout-value { color: #4ade80; font-weight: 700; }
+
+        .cro-controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 180px;
+            gap: 16px;
+        }
+        .cro-knob-group { display: flex; flex-direction: column; gap: 4px; }
+        .cro-run-btn {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 2px solid #333846;
+            background: #1a1d24;
+            color: #f87171;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cro-run-btn.cro-run-active {
+            background: #0f2f1a;
+            border-color: #4ade80;
+            color: #4ade80;
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+        }
+        .cro-measure-submenu { padding: 6px 0; }
+        .cro-measure-btn {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 2px solid #333846;
+            background: #1a1d24;
+            color: #cbd5e1;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+        }
+        .cro-measure-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+        .cro-measure-btn.active {
+            background: #0c2a3d;
+            border-color: #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+        }
+        .cro-cursor-delete-btn {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #7f1d1d;
+            background: #2a1215;
+            color: #f87171;
+            cursor: pointer;
+        }
+        .cro-cursor-delete-btn:hover { background: #3a181c; }
+
+        /* =====================================================================
+           DIODE V-I LAB: material selector, depletion-region crystal panel,
+           and the amber curve-tracer graph.
+           ===================================================================== */
+        .diode-instrument {
+            background: linear-gradient(160deg, #3a3f4b, #23262e);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+            border: 1px solid #1a1c22;
+        }
+        .diode-mat-btn {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #333846;
+            background: #1a1d24;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .diode-mat-sub { display: block; font-size: 11px; font-weight: 400; margin-top: 4px; opacity: 0.8; }
+        .diode-mat-btn:hover { border-color: #64748b; color: #e2e8f0; }
+        .diode-mat-btn.active {
+            background: #3d1f0a;
+            border-color: #fb923c;
+            color: #fb923c;
+            box-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
+        }
+        .diode-crystal-canvas, .diode-screen {
+            width: 100%;
+            display: block;
+            background: #111318;
+            border-radius: 8px;
+            border: 3px solid #05060a;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.7);
+        }
+        .cro-knob-label {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        .cro-knob-value { font-family: 'Courier New', monospace; font-size: 11px; color: #4ade80; }
+        .cro-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #05060a;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
+            outline: none;
+        }
+        .cro-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #e2e8f0, #64748b 70%);
+            border: 2px solid #1e293b;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .fg-waveform-buttons { display: flex; gap: 8px; }
+        .fg-wave-btn {
+            background: #1a1d24;
+            border: 2px solid #333846;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            line-height: 1.4;
+        }
+        .fg-wave-btn:hover { border-color: #64748b; color: #e2e8f0; }
+        .fg-wave-btn.active {
+            background: #0f2f1a;
+            border-color: #4ade80;
+            color: #4ade80;
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+        }
+
+        /* =====================================================================
+           RIGHT-SIDE ASSISTANT DRAWER
+           Teacher + Friend Assistant live in a slide-in panel on the right.
+           It sits BESIDE the workspace, not on top of it: when open, the
+           page content gets extra right padding equal to the drawer's width
+           so nothing is hidden underneath it. Closing/reopening only slides
+           the panel - it never clears its contents, so chat history stays.
+           ===================================================================== */
+        #assistant-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: min(400px, 92vw);
+            background: var(--app-surface);
+            border-left: 1px solid var(--app-border);
+            box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12);
+            z-index: 60;
+            overflow-y: auto;
+            padding: 16px;
+            transition: transform 0.28s ease;
+            transform: translateX(0);
+        }
+        #assistant-drawer.closed { transform: translateX(100%); }
+        #assistant-drawer-toggle {
+            position: fixed;
+            top: 16px;
+            right: min(400px, 92vw);
+            z-index: 61;
+            background: var(--app-accent);
+            color: #fff;
+            border: none;
+            padding: 10px 8px;
+            border-radius: 10px 0 0 10px;
+            box-shadow: var(--app-shadow-md);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            transition: right 0.28s ease;
+        }
+        #assistant-drawer.closed ~ #assistant-drawer-toggle,
+        #assistant-drawer-toggle.drawer-closed { right: 0; }
+        #assistant-drawer-toggle:hover { background: var(--app-accent-dark); }
+
+        /* Pushes the workspace content left so the open drawer sits BESIDE
+           it rather than covering it. */
+        body.assistant-open {
+            padding-right: calc(10px + min(400px, 92vw)) !important;
+            transition: padding-right 0.28s ease;
+        }
+
+        /* Chat log bubbles inside the assistant panels (persist across
+           open/close - see appendChatMessage in the main script) */
+        .chat-log-entry { margin-bottom: 8px; }
+        .chat-log-entry:last-child { margin-bottom: 0; }
+
+        /* ---- Workplace / Practical Sandbox parts-box: clean icon tiles ---- */
+        #tab-workplace .grid button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            min-height: 52px;
+            border-radius: 10px;
+            border: 1px solid var(--app-border);
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: var(--app-shadow);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+        #tab-workplace .grid button:hover { transform: translateY(-1px); box-shadow: var(--app-shadow-md); }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-8 assistant-open">
 
     <!-- Custom Modal for Alerts/Confirms (General) -->
     <div id="custom-alert-modal" class="custom-modal hidden">
@@ -413,11 +830,21 @@
         <div class="bg-white p-4 rounded-xl shadow-lg mb-4">
             <label for="experiment-select" class="text-sm font-bold text-gray-700 block mb-2">Experiment Protocol Selection:</label>
             <select id="experiment-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        <option value="EXP_1_THEORY">1. Study of Active & Passive Components (Theory)</option>
-        <option value="OHMS_LAW">2. DC Analysis: Ohm's Law (Series)</option>
-        <option value="MOSFET_SWITCH">3. Semiconductor Control: MOSFET Switching</option>
-        <option value="CS_AMPLIFIER">4. Analog Biasing: Common Source Amplifier (DC)</option>
-        <option value="DIGITAL_LOGIC">5. Digital Systems: Conceptual IC Testing</option>
+        <optgroup label="Year 1 Practical Syllabus">
+        <option value="EXP_1_THEORY">1. Study of Active &amp; Passive Components</option>
+        <option value="MEASUREMENTS">2. Measurements: CRO, Function Generator &amp; Multimeter</option>
+        <option value="DIODE_VI">3. V-I Characteristics of PN Junction Diode</option>
+        <option value="RECTIFIER">4. Rectifier Circuits: Bridge Rectifier DC Supply (Coming Soon)</option>
+        <option value="CE_AMPLIFIER">5. CE BJT Amplifier &amp; Gain Calculation (Coming Soon)</option>
+        <option value="OPAMP">6. Op-Amp Linear Applications (Coming Soon)</option>
+        <option value="LOGIC_GATES">7. Logic Gates &amp; Half/Full Adder</option>
+        </optgroup>
+        <optgroup label="Bonus Practice Circuits">
+        <option value="OHMS_LAW">Bonus: Ohm's Law (Series Circuit)</option>
+        <option value="MOSFET_SWITCH">Bonus: MOSFET Switching Circuit</option>
+        <option value="CS_AMPLIFIER">Bonus: Common Source Amplifier (DC Bias)</option>
+        <option value="DIGITAL_LOGIC">Bonus: Conceptual IC Testing</option>
+        </optgroup>
 </select>
         </div>
 
@@ -521,6 +948,7 @@
                             <option value="None">-- Select Mode --</option>
                             <option value="V">Voltmeter (V)</option>
                             <option value="A">Ammeter (A)</option>
+                            <option value="Ω">Ohmmeter (Ω)</option>
                         </select>
                         <p class="text-xs text-gray-500 italic">V: Connect parallel (across 1 component). A: Connect in series (break a wire).</p>
                     </div>
@@ -545,26 +973,6 @@
                     </div>
                 </div>
 
-
-                <!-- 1. Teacher Assistant (Concept Explanation) -->
-                <div id="teacher-panel-container" class="bg-white p-4 rounded-xl shadow-lg">
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <h3 class="text-lg font-bold flex items-center text-primary-blue">
-            <span role="img" aria-label="teacher" class="mr-2 text-xl">🎓</span> Teacher Assistant
-        </h3>
-        <button id="teacher-speak-toggle" class="text-gray-400 hover:text-primary-blue transition-colors font-bold text-lg p-1 border border-gray-200 rounded" title="Toggle Voice Explanation">
-            <span id="speaker-icon">🔇</span>
-        </button>
-    </div>
-
-    <div id="teacher-response-area" class="teacher-panel p-3 mb-4 overflow-y-auto" style="max-height: 200px;">
-        <p class="chat-bubble text-gray-700 text-sm">I'm here to explain concepts. Click the speaker icon 🔇 to hear me talk!</p>
-    </div>
-    <div id="teacher-loading-indicator" class="hidden text-center mt-2">
-        <p class="text-sm text-primary-blue">Fetching conceptual data...</p>
-    </div>
-</div>
-
             </div>
 
             <!-- ====== COLUMN 2 & 3: WORKSPACE, GUIDE, and RESULTS (Maximized) ====== -->
@@ -575,40 +983,22 @@
                         <canvas id="circuit-canvas" class="w-full" width="800" height="400"></canvas>
                     </div>
                 </div>
-                
-                <!-- 2. Friend Assistant (GUIDANCE - MOVED TO THE WORKSPACE COLUMN) -->
-                <div id="friend-panel-container" class="bg-white p-4 rounded-xl shadow-lg">
-                    <h3 class="text-lg font-bold mb-4 flex items-center text-success-green border-b pb-2">
-                        <span role="img" aria-label="friend" class="mr-2 text-xl">🤖</span> Friend Assistant (Real-Time Guide)
-                    </h3>
-                    <div id="friend-response-area" class="friend-panel p-3 mb-4 overflow-y-auto" style="max-height: 180px;">
-                        <p class="chat-bubble text-gray-700 text-sm">I'm your guide! To start, select an experiment from the dropdown above.</p>
-                    </div>
 
-                    <!-- Transcribed Text Output (NEW) -->
-                    <div id="transcribed-text-output" class="text-sm font-semibold text-gray-600 bg-gray-100 p-2 rounded-lg mb-2 hidden">
-                        <!-- Transcription text will appear here -->
-                    </div>
-                    
-                    <!-- Text Input Query and Send Button -->
-                    <div class="flex space-x-2 mb-2">
-                        <input type="text" id="friend-text-query" placeholder="Ask a question or report an error..." 
-                               class="flex-grow rounded-lg p-2 text-sm text-gray-800 focus:ring-primary-blue focus:border-primary-blue border border-gray-300">
-                        <button id="send-friend-query-btn" class="bg-primary-blue hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg transition duration-150 text-sm">
-                            Solve
-                        </button>
-                    </div>
+                <!-- Coming Soon placeholder (shown instead of the canvas for not-yet-built experiments) -->
+                <div id="coming-soon-panel" class="hidden bg-white rounded-xl shadow-2xl border-4 border-slate-300 flex flex-col items-center justify-center text-center p-12" style="min-height: 400px;">
+                    <span class="text-5xl mb-4">🚧</span>
+                    <h3 id="coming-soon-title" class="text-xl font-bold text-slate-700 mb-2"></h3>
+                    <p class="text-gray-500 max-w-md">This experiment isn't built yet. It's on the roadmap - pick a different experiment from the dropdown above for now.</p>
+                </div>
 
-                    <!-- Voice Input -->
-                    <div class="flex flex-col gap-2">
-                        <button id="start-voice-chat-btn" class="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition duration-150">
-                            <span role="img" aria-label="mic">🎙️</span> START VOICE CHAT
-                        </button>
-                    </div>
-                    
-                    <div id="friend-loading-indicator" class="hidden text-center mt-2">
-                        <p class="text-sm text-primary-blue">Thinking...</p>
-                    </div>
+                <!-- Measurements Lab launcher (the real Function Generator + CRO live in their own window) -->
+                <div id="measurements-panel" class="hidden bg-white rounded-xl shadow-2xl border-4 border-slate-300 flex flex-col items-center justify-center text-center p-12" style="min-height: 300px;">
+                    <span class="text-5xl mb-4">📟</span>
+                    <h3 class="text-xl font-bold text-slate-700 mb-2">Measurements Lab</h3>
+                    <p class="text-gray-500 max-w-md mb-4">The CRO, Function Generator, and Digital Multimeter live in their own dedicated instrument window - just like Experiment 1.</p>
+                    <button onclick="openMeasurementsLab()" class="bg-primary-blue hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition duration-150 shadow-lg">
+                        🔬 Open Measurements Lab
+                    </button>
                 </div>
 
                 <!-- Simulation Output (Analog/Digital) -->
@@ -927,15 +1317,31 @@
                         
                         <div class="bg-white p-3 rounded-xl shadow border border-gray-200">
                             <h3 class="font-bold text-sm text-slate-800 mb-2 border-b pb-1">Parts Box</h3>
-                            <div class="grid grid-cols-2 gap-1.5 overflow-y-auto max-h-[180px] pr-1">
-                                <button onclick="startPlacing('Battery')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">🔋 Battery</button>
-                                <button onclick="startPlacing('Resistor')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">〰️ Resistor</button>
-                                <button onclick="startPlacing('Capacitor')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">|| Capacitor</button>
-                                <button onclick="startPlacing('Diode')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">▶| Diode</button>
-                                <button onclick="startPlacing('LED')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">💡 LED</button>
-                                <button onclick="startPlacing('Switch')" class="bg-slate-100 hover:bg-blue-200 text-xs font-bold py-1.5 rounded border border-gray-300 shadow-sm transition">🔌 Switch</button>
-                                <button onclick="startPlacing('Wire')" class="bg-yellow-100 hover:bg-yellow-300 text-slate-800 text-xs font-bold py-1.5 rounded border border-yellow-400 shadow-sm transition">➖ Wire</button>
-                                <button onclick="activateDeleteTool()" class="bg-red-100 hover:bg-red-300 text-red-800 text-xs font-bold py-1.5 rounded border border-red-400 shadow-sm transition">🗑️ Delete</button>
+                            <div class="grid grid-cols-3 gap-2 overflow-y-auto max-h-[200px] pr-1">
+                                <button onclick="startPlacing('Battery')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">🔋</span><span>Battery</span>
+                                </button>
+                                <button onclick="startPlacing('Resistor')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">🟫</span><span>Resistor</span>
+                                </button>
+                                <button onclick="startPlacing('Capacitor')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">⏸️</span><span>Capacitor</span>
+                                </button>
+                                <button onclick="startPlacing('Diode')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">⏩</span><span>Diode</span>
+                                </button>
+                                <button onclick="startPlacing('LED')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">💡</span><span>LED</span>
+                                </button>
+                                <button onclick="startPlacing('Switch')" class="bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-slate-700 transition">
+                                    <span class="text-lg">🔌</span><span>Switch</span>
+                                </button>
+                                <button onclick="startPlacing('Wire')" class="bg-yellow-50 hover:bg-yellow-100 hover:border-yellow-400 text-slate-800 transition">
+                                    <span class="text-lg">➖</span><span>Wire</span>
+                                </button>
+                                <button onclick="activateDeleteTool()" class="bg-red-50 hover:bg-red-100 hover:border-red-400 text-red-700 transition">
+                                    <span class="text-lg">🗑️</span><span>Delete</span>
+                                </button>
                             </div>
                         </div>
 
@@ -984,6 +1390,267 @@
 
     </div>
 </div>
+
+<!-- ====== MEASUREMENTS LAB (dedicated window, like Experiment 1) ====== -->
+<div id="measurements-modal" class="fullscreen-modal hidden">
+    <div class="exp1-header">
+        <div class="flex items-center">
+            <h2 class="text-2xl font-bold flex items-center">
+                <span class="mr-2">📟</span> Exp 2: Measurements Lab
+            </h2>
+        </div>
+        <button onclick="closeMeasurementsLab()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition">
+            ❌ Close
+        </button>
+    </div>
+
+    <div class="exp1-center" style="overflow-y:auto; padding: 24px;">
+        <div class="max-w-5xl mx-auto space-y-6">
+
+            <!-- ===== Bench Instrument: CRO + Function Generator front panel ===== -->
+            <div class="cro-instrument">
+                <div class="cro-instrument-brand">DSO-2000 <span>Dual Trace Oscilloscope</span></div>
+                <div class="flex flex-col lg:flex-row gap-5">
+                    <!-- Screen -->
+                    <div class="cro-screen-bezel">
+                        <!-- Delete Cursors bar - only visible while cursors are active -->
+                        <div id="cro-cursor-delete-bar" class="hidden flex justify-end mb-2">
+                            <button onclick="clearCursors()" class="cro-cursor-delete-btn">🗑 Delete Cursors</button>
+                        </div>
+                        <canvas id="cro-canvas" width="560" height="260"></canvas>
+
+                        <!-- Cursor reading table - only visible while cursors are active -->
+                        <div id="cro-cursor-readout" class="hidden mt-2">
+                            <p id="cro-cursor-readout-label" class="text-xs font-mono text-center text-slate-400 mb-1"></p>
+                            <div class="grid grid-cols-3 gap-2 text-xs font-mono text-center">
+                                <div class="cro-readout">A: <span id="cro-cursor-a-val" class="cro-readout-value">-</span></div>
+                                <div class="cro-readout">B: <span id="cro-cursor-b-val" class="cro-readout-value">-</span></div>
+                                <div class="cro-readout">Δ: <span id="cro-cursor-delta-val" class="cro-readout-value">-</span></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 mt-3 text-xs font-mono text-center">
+                            <div class="cro-readout">Vpp: <span id="cro-vpp" class="cro-readout-value">10.0 V</span></div>
+                            <div class="cro-readout">Freq: <span id="cro-freq" class="cro-readout-value">1000 Hz</span></div>
+                            <div class="cro-readout">Period: <span id="cro-period" class="cro-readout-value">1.00 ms</span></div>
+                        </div>
+                    </div>
+
+                    <!-- CRO controls (Run/Stop, Measure, Time/Div) -->
+                    <div class="cro-controls">
+                        <div class="flex gap-2">
+                            <button id="cro-run-toggle" class="cro-run-btn cro-run-active">⏸ STOP</button>
+                            <button id="cro-measure-toggle" class="cro-run-btn" onclick="toggleMeasureMenu()">📏 MEASURE</button>
+                        </div>
+                        <div id="cro-measure-submenu" class="hidden flex flex-col gap-2 cro-measure-submenu">
+                            <button class="cro-measure-btn" onclick="activateCursorMode('voltage')">⚡ Voltage / Amplitude</button>
+                            <button class="cro-measure-btn" onclick="activateCursorMode('time')">⏱ Time / Period / Freq</button>
+                        </div>
+                        <div class="cro-knob-group">
+                            <label class="cro-knob-label">TIME/DIV (ms)</label>
+                            <input type="range" id="fg-timediv" min="0.05" max="1" value="0.2" step="0.05" class="cro-slider">
+                            <span class="cro-knob-value" id="fg-timediv-label">0.2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to use cursors -->
+            <div class="bg-white p-3 rounded-xl shadow text-xs text-gray-600">
+                <strong class="text-slate-700">How to use Cursors:</strong>
+                Click <strong>MEASURE</strong>, then choose what to measure.
+                <strong>Voltage / Amplitude</strong> gives you two horizontal lines (drag them up/down) to measure the voltage between two points on the wave.
+                <strong>Time / Period / Freq</strong> gives you two vertical lines (drag them left/right) to measure the time between two points, plus the resulting period and frequency.
+                Click <strong>🗑 Delete Cursors</strong> above the screen to remove them.
+            </div>
+
+            <!-- ===== Bench Instrument: Function Generator front panel ===== -->
+            <div class="fg-instrument">
+                <div class="fg-instrument-brand">FG-100 <span>Function Generator</span></div>
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="fg-waveform-buttons">
+                        <button data-wave="sine" class="fg-wave-btn active" onclick="setFgWaveform('sine', this)">∿<br>SINE</button>
+                        <button data-wave="square" class="fg-wave-btn" onclick="setFgWaveform('square', this)">⊓⊔<br>SQUARE</button>
+                        <button data-wave="triangle" class="fg-wave-btn" onclick="setFgWaveform('triangle', this)">△<br>TRI</button>
+                    </div>
+                    <select id="fg-waveform" class="hidden"><option value="sine">Sine</option><option value="square">Square</option><option value="triangle">Triangle</option></select>
+
+                    <div class="cro-knob-group flex-1">
+                        <label class="cro-knob-label">FREQUENCY: <span id="fg-freq-label">1000</span> Hz</label>
+                        <input type="range" id="fg-frequency" min="10" max="5000" value="1000" step="10" class="cro-slider">
+                    </div>
+                    <div class="cro-knob-group flex-1">
+                        <label class="cro-knob-label">AMPLITUDE: <span id="fg-amp-label">5.0</span> V</label>
+                        <input type="range" id="fg-amplitude" min="0.5" max="10" value="5" step="0.5" class="cro-slider">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Digital Multimeter guidance (uses the shared circuit canvas) ===== -->
+            <div class="bg-white p-4 rounded-xl shadow-lg">
+                <h3 class="text-lg font-semibold text-slate-800 mb-2 border-b pb-2">🔢 Digital Multimeter: DC Voltage &amp; Resistance</h3>
+                <p class="text-sm text-gray-600">Build a Battery + Resistor circuit with a Multimeter in the main workspace (behind this window) to measure DC voltage and resistance - the Friend Assistant on the right will walk you through it step by step. Close this window to go back to the circuit canvas.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ====== DIODE V-I CHARACTERISTICS LAB (dedicated window) ====== -->
+<div id="diode-vi-modal" class="fullscreen-modal hidden">
+    <div class="exp1-header">
+        <div class="flex items-center">
+            <h2 class="text-2xl font-bold flex items-center">
+                <span class="mr-2">⚛️</span> Exp 3: V-I Characteristics of PN Junction Diode
+            </h2>
+        </div>
+        <button onclick="closeDiodeLab()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition">
+            ❌ Close
+        </button>
+    </div>
+
+    <div class="exp1-center" style="overflow-y:auto; padding: 24px;">
+        <div class="max-w-5xl mx-auto space-y-6">
+
+            <!-- A. Material Selector -->
+            <div class="diode-instrument">
+                <div class="cro-instrument-brand">Diode Material <span>Choose the semiconductor</span></div>
+                <div class="flex gap-3">
+                    <button id="diode-mat-silicon" class="diode-mat-btn active" onclick="setDiodeMaterial('SILICON', this)">
+                        Silicon <span class="diode-mat-sub">(Vγ ≈ 0.7V)</span>
+                    </button>
+                    <button id="diode-mat-germanium" class="diode-mat-btn" onclick="setDiodeMaterial('GERMANIUM', this)">
+                        Germanium <span class="diode-mat-sub">(Vγ ≈ 0.3V)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-5">
+                <!-- B. Physical Depletion Region -->
+                <div class="diode-instrument flex-1">
+                    <div class="cro-instrument-brand">Inside the Crystal <span>P-N Junction Depletion Region</span></div>
+                    <canvas id="depletion-canvas" width="440" height="180" class="diode-crystal-canvas"></canvas>
+                    <p id="depletion-status" class="text-center font-mono text-xs mt-2 text-amber-400">Reverse Biased - Barrier WIDE - Blocked (0 mA)</p>
+                </div>
+
+                <!-- C. Live I-V Graph -->
+                <div class="diode-instrument flex-1">
+                    <div class="cro-instrument-brand">I-V Characteristics <span>Live Curve Tracer</span></div>
+                    <canvas id="diode-iv-canvas" width="440" height="260" class="diode-screen"></canvas>
+                    <div class="grid grid-cols-2 gap-2 mt-2 text-xs font-mono text-center">
+                        <div class="cro-readout">V<sub>D</sub>: <span id="diode-vd-readout" class="cro-readout-value">0.00 V</span></div>
+                        <div class="cro-readout">I<sub>D</sub>: <span id="diode-id-readout" class="cro-readout-value">0.00 mA</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bias Voltage Control -->
+            <div class="diode-instrument">
+                <label class="cro-knob-label">BIAS VOLTAGE (V<sub>D</sub>): <span id="diode-voltage-label">0.00</span> V</label>
+                <input type="range" id="diode-voltage-slider" min="-2" max="1" value="0" step="0.01" class="cro-slider w-full mt-2">
+                <div class="flex justify-between text-xs font-mono text-slate-400 mt-1">
+                    <span>-2.0V (Reverse)</span>
+                    <span>0V</span>
+                    <span>+1.0V (Forward)</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-3 rounded-xl shadow text-xs text-gray-600">
+                <strong class="text-slate-700">How this works:</strong>
+                Drag the Bias Voltage slider. Below the knee voltage, the depletion region barrier is present and current stays near zero.
+                Past the knee voltage (0.7V for Silicon, 0.3V for Germanium), the barrier collapses and current shoots up exponentially -
+                watch the glowing amber dot race up the curve on the I-V graph as you cross that point.
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <button id="assistant-drawer-toggle" onclick="toggleAssistantDrawer()" title="Show/Hide Assistants">🤖 ▶</button>
+    <div id="assistant-drawer">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-base font-bold text-slate-800">AI Assistants</h2>
+            <button onclick="toggleAssistantDrawer()" class="text-gray-400 hover:text-slate-700 text-xl font-bold leading-none px-2" title="Close">×</button>
+        </div>
+
+        <!-- 1. Teacher Assistant (Concept Explanation) -->
+        <div id="teacher-panel-container" class="bg-white p-4 rounded-xl shadow-lg mb-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-lg font-bold flex items-center text-primary-blue">
+                    <span role="img" aria-label="teacher" class="mr-2 text-xl">🎓</span> Teacher Assistant
+                </h3>
+                <button id="teacher-speak-toggle" class="text-gray-400 hover:text-primary-blue transition-colors font-bold text-lg p-1 border border-gray-200 rounded" title="Toggle Voice Explanation">
+                    <span id="speaker-icon">🔇</span>
+                </button>
+            </div>
+
+            <div id="teacher-response-area" class="teacher-panel p-3 mb-4 overflow-y-auto" style="max-height: 200px;">
+                <p class="chat-bubble text-gray-700 text-sm">I'm here to explain concepts. Click the speaker icon 🔇 to hear me talk!</p>
+            </div>
+            <div id="teacher-loading-indicator" class="hidden text-center mt-2">
+                <p class="text-sm text-primary-blue">Fetching conceptual data...</p>
+            </div>
+        </div>
+
+        <!-- 2. Friend Assistant (Real-Time Step-by-Step Guide) -->
+        <div id="friend-panel-container" class="bg-white p-4 rounded-xl shadow-lg">
+            <h3 class="text-lg font-bold mb-4 flex items-center text-success-green border-b pb-2">
+                <span role="img" aria-label="friend" class="mr-2 text-xl">🤖</span> Friend Assistant (Step-by-Step Guide)
+            </h3>
+            <div id="friend-response-area" class="friend-panel p-3 mb-4 overflow-y-auto" style="max-height: 180px;">
+                <p class="chat-bubble text-gray-700 text-sm">I'm your guide! To start, select an experiment from the dropdown above.</p>
+            </div>
+
+            <!-- Transcribed Text Output -->
+            <div id="transcribed-text-output" class="text-sm font-semibold text-gray-600 bg-gray-100 p-2 rounded-lg mb-2 hidden">
+                <!-- Transcription text will appear here -->
+            </div>
+
+            <!-- Text Input Query and Send Button -->
+            <div class="flex space-x-2 mb-2">
+                <input type="text" id="friend-text-query" placeholder="Ask a question or report an error..."
+                       class="flex-grow rounded-lg p-2 text-sm text-gray-800 focus:ring-primary-blue focus:border-primary-blue border border-gray-300">
+                <button id="send-friend-query-btn" class="bg-primary-blue hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg transition duration-150 text-sm">
+                    Solve
+                </button>
+            </div>
+
+            <!-- Voice Input -->
+            <div class="flex flex-col gap-2">
+                <button id="start-voice-chat-btn" class="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition duration-150">
+                    <span role="img" aria-label="mic">🎙️</span> START VOICE CHAT
+                </button>
+            </div>
+
+            <div id="friend-loading-indicator" class="hidden text-center mt-2">
+                <p class="text-sm text-primary-blue">Thinking...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAssistantDrawer() {
+            const drawer = document.getElementById('assistant-drawer');
+            const toggle = document.getElementById('assistant-drawer-toggle');
+            const isClosed = drawer.classList.toggle('closed');
+            toggle.classList.toggle('drawer-closed', isClosed);
+            toggle.textContent = isClosed ? '🤖 ◀' : '🤖 ▶';
+            document.body.classList.toggle('assistant-open', !isClosed);
+            // Note: this only slides the panel - it never touches the chat
+            // log content, so past questions/answers stay exactly as they were.
+
+            // The drawer push-transition changes the workspace's width, but the
+            // canvas's internal pixel buffer doesn't update on its own (only a
+            // real window 'resize' event triggers that). Without this, clicks
+            // land in the wrong spot and placed parts appear in the wrong place.
+            // Wait for the 0.28s push transition to finish, then resync.
+            setTimeout(() => {
+                if (typeof resizeCanvas === 'function') resizeCanvas();
+            }, 300);
+        }
+    </script>
+
     <script>
         // --- Custom Modal Functions (Replace alert and confirm) ---
         /**
@@ -1035,31 +1702,165 @@
             modal.classList.remove('hidden');
         }
 
+        /**
+         * Converts canvas-space coordinates (the same space comp.x/comp.y
+         * and click x/y are in) to real page/screen coordinates, accounting
+         * for the canvas's CSS scaling (it's drawn at a fixed width/height
+         * but displayed at w-full, so the two don't usually match 1:1).
+         */
+        function canvasPointToScreen(x, y) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = rect.width / canvas.width;
+            const scaleY = rect.height / canvas.height;
+            return { x: rect.left + x * scaleX, y: rect.top + y * scaleY };
+        }
+
+        /**
+         * A small Yes/No confirmation popup anchored right beside a specific
+         * point on screen (a component or wire), instead of the generic
+         * centered modal - used for delete confirmations so the message
+         * appears next to the thing being deleted.
+         */
+        function showInlineConfirm(screenX, screenY, message, callback) {
+            const existing = document.getElementById('inline-confirm-popup');
+            if (existing) existing.remove();
+
+            const popup = document.createElement('div');
+            popup.id = 'inline-confirm-popup';
+            popup.className = 'bg-white rounded-xl p-3';
+            popup.style.cssText = `
+                position: fixed;
+                z-index: 200;
+                width: 220px;
+                box-shadow: var(--app-shadow-md, 0 6px 18px rgba(0,0,0,0.18));
+                border: 1px solid var(--app-border, #e2e8f0);
+                border-radius: 12px;
+                background: var(--app-surface, #fff);
+            `;
+            popup.innerHTML = `
+                <p class="text-xs text-slate-700 mb-2">${message}</p>
+                <div class="flex justify-end gap-2">
+                    <button id="inline-confirm-cancel" class="text-xs px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">Cancel</button>
+                    <button id="inline-confirm-yes" class="text-xs px-2 py-1 rounded bg-warning-red hover:bg-red-600 text-white font-bold">Delete</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+
+            // Position it beside the point, clamped to stay on-screen
+            const popupW = 220, popupH = popup.offsetHeight || 80;
+            let left = screenX + 16;
+            let top = screenY - popupH / 2;
+            if (left + popupW > window.innerWidth - 8) left = screenX - popupW - 16;
+            if (top < 8) top = 8;
+            if (top + popupH > window.innerHeight - 8) top = window.innerHeight - popupH - 8;
+            popup.style.left = `${left}px`;
+            popup.style.top = `${top}px`;
+
+            const cleanup = (result) => { popup.remove(); document.removeEventListener('mousedown', outsideClick, true); callback(result); };
+            const outsideClick = (e) => { if (!popup.contains(e.target)) cleanup(false); };
+
+            document.getElementById('inline-confirm-yes').onclick = () => cleanup(true);
+            document.getElementById('inline-confirm-cancel').onclick = () => cleanup(false);
+            setTimeout(() => document.addEventListener('mousedown', outsideClick, true), 0);
+        }
 
         // --- Experiment Definitions & Global State ---
 
         const EXPERIMENTS = {
-            // 👇 NEW DEFINITION ADDED
             EXP_1_THEORY: {
                 name: "1. Study of Active & Passive Components",
                 goal: "Explore the theory of Resistors, Capacitors, and Semiconductors in the study window.",
+                steps: []
             },
-            // ... (Keep your other experiments below exactly as they were) ...
+            MEASUREMENTS: {
+                name: "2. Measurements: CRO, Function Generator & Digital Multimeter",
+                goal: "Use the Function Generator + CRO to observe an AC waveform, and the Digital Multimeter to measure DC voltage and resistance.",
+                steps: [
+                    { text: "Click the Battery button to place a 9V source on the canvas.", check: s => s.components.some(c => c.type === 'Battery'), expect: { kind: 'place', type: 'Battery' } },
+                    { text: "Click the Resistor button to place a resistor to measure.", check: s => s.components.some(c => c.type === 'Resistor'), expect: { kind: 'place', type: 'Resistor' } },
+                    { text: "Click the Multimeter button to place it on the canvas.", check: s => s.components.some(c => c.type === 'Multimeter'), expect: { kind: 'place', type: 'Multimeter' } },
+                    { text: "Wire the Multimeter across the Resistor (2 connections).", check: s => { const m = s.components.find(c => c.type === 'Multimeter'); return m && m.node0Connected && m.node1Connected; }, expect: { kind: 'wire' } },
+                    { text: "Select the Multimeter, choose Voltmeter or Ohmmeter mode, then Save.", check: s => { const m = s.components.find(c => c.type === 'Multimeter'); return m && m.mode && m.mode !== 'None'; }, expect: { kind: 'mode' } },
+                    { text: "Click 'EXECUTE ANALYSIS' to take the reading.", check: s => s.hasRun, expect: { kind: 'run' } },
+                    { text: "Now try the Function Generator + CRO panel below to view an AC waveform.", check: s => false, expect: null }
+                ]
+            },
+            DIODE_VI: {
+                name: "3. V-I Characteristics of PN Junction Diode",
+                goal: "Choose Silicon or Germanium, sweep the bias voltage, and observe the depletion region and the exponential I-V curve.",
+                comingSoon: false, steps: []
+            },
+            RECTIFIER: {
+                name: "4. Rectifier Circuits: Bridge Rectifier DC Power Supply",
+                goal: "Coming soon: build a bridge rectifier and observe the regulated DC output.",
+                comingSoon: true, steps: []
+            },
+            CE_AMPLIFIER: {
+                name: "5. Common Emitter (CE) BJT Amplifier & Gain Calculation",
+                goal: "Coming soon: build a CE amplifier and calculate its voltage gain.",
+                comingSoon: true, steps: []
+            },
+            OPAMP: {
+                name: "6. Op-Amp Linear Applications (Inverting/Non-Inverting)",
+                goal: "Coming soon: build inverting and non-inverting amplifiers using an Op-Amp 741.",
+                comingSoon: true, steps: []
+            },
+            LOGIC_GATES: {
+                name: "7. Logic Gates & Half/Full Adder Truth Tables",
+                goal: "Place an IC Logic Chip, Digital Input, and Digital Output to verify truth tables.",
+                steps: [
+                    { text: "Click the IC button and select a 74LS logic chip to place.", check: s => s.components.some(c => c.type === 'IC'), expect: { kind: 'place', type: 'IC' } },
+                    { text: "Place a Digital Input component and wire it to an IC input pin.", check: s => s.components.some(c => c.type === 'DigitalInput'), expect: { kind: 'place', type: 'DigitalInput' } },
+                    { text: "Place a Digital Output component and wire it to the IC output pin.", check: s => s.components.some(c => c.type === 'DigitalOutput'), expect: { kind: 'place', type: 'DigitalOutput' } },
+                    { text: "Wire the components together (at least 2 wires).", check: s => s.wireCount >= 2, expect: { kind: 'wire' } },
+                    { text: "Toggle the Digital Inputs, then click 'EXECUTE ANALYSIS' to check the truth table.", check: s => s.hasRun, expect: { kind: 'run' } }
+                ]
+            },
+            // --- Bonus practice circuits (kept from the original sandbox) ---
             OHMS_LAW: {
-                name: "2. DC Analysis: Ohm's Law - Simple Series Circuit",
+                name: "Bonus Practice: DC Analysis - Ohm's Law (Series Circuit)",
                 goal: "Construct a closed series circuit using a 9V Battery and a single 220Ω Resistor.",
+                steps: [
+                    { text: "Click the Battery button to place a 9V Battery on the canvas.", check: s => s.components.some(c => c.type === 'Battery'), expect: { kind: 'place', type: 'Battery' } },
+                    { text: "Click the Resistor button to place a 220Ω Resistor on the canvas.", check: s => s.components.some(c => c.type === 'Resistor'), expect: { kind: 'place', type: 'Resistor' } },
+                    { text: "Click the Battery's terminal, then one end of the Resistor, to wire them.", check: s => { const b = s.components.find(c => c.type === 'Battery'); const r = s.components.find(c => c.type === 'Resistor'); return !!(b && r && (b.node0Connected || b.node1Connected) && (r.node0Connected || r.node1Connected)); }, expect: { kind: 'wire' } },
+                    { text: "Wire the Resistor's other end back to the Battery to close the loop.", check: s => { const b = s.components.find(c => c.type === 'Battery'); const r = s.components.find(c => c.type === 'Resistor'); return !!(b && r && b.node0Connected && b.node1Connected && r.node0Connected && r.node1Connected); }, expect: { kind: 'wire' } },
+                    { text: "Click 'EXECUTE ANALYSIS' to run the simulation and check the current.", check: s => s.hasRun, expect: { kind: 'run' } }
+                ]
             },
             MOSFET_SWITCH: {
-                name: "3. MOSFET Switching Circuit (Complex)",
+                name: "Bonus Practice: MOSFET Switching Circuit",
                 goal: "Use a Resistor and an LED in series with the MOSFET's Drain and Source. Connect Gate to VCC.",
+                steps: [
+                    { text: "Place a MOSFET component on the canvas.", check: s => s.components.some(c => c.type === 'MOSFET'), expect: { kind: 'place', type: 'MOSFET' } },
+                    { text: "Place a Resistor to wire in series with an LED.", check: s => s.components.some(c => c.type === 'Resistor'), expect: { kind: 'place', type: 'Resistor' } },
+                    { text: "Place an LED to wire after the Resistor.", check: s => s.components.some(c => c.type === 'LED'), expect: { kind: 'place', type: 'LED' } },
+                    { text: "Place a VCC Rail and a Ground reference.", check: s => s.components.some(c => c.type === 'VCC') && s.components.some(c => c.type === 'Ground'), expect: { kind: 'place', type: 'VCC' } },
+                    { text: "Wire VCC → Resistor → LED → MOSFET Drain, Source → Ground, Gate → VCC.", check: s => s.wireCount >= 4, expect: { kind: 'wire' } },
+                    { text: "Click 'EXECUTE ANALYSIS' to confirm the LED turns on.", check: s => s.hasRun, expect: { kind: 'run' } }
+                ]
             },
             CS_AMPLIFIER: {
-                name: "4. Single Stage CS Amplifier (DC Bias)",
+                name: "Bonus Practice: Common Source Amplifier (DC Bias)",
                 goal: "Construct the DC biasing network for a Common Source amplifier.",
+                steps: [
+                    { text: "Place a Battery/VCC source on the canvas.", check: s => s.components.some(c => c.type === 'Battery' || c.type === 'VCC'), expect: { kind: 'place', type: 'Battery' } },
+                    { text: "Place two Resistors to form the Gate voltage-divider.", check: s => s.components.filter(c => c.type === 'Resistor').length >= 2, expect: { kind: 'place', type: 'Resistor' } },
+                    { text: "Place the MOSFET for the amplifier stage.", check: s => s.components.some(c => c.type === 'MOSFET'), expect: { kind: 'place', type: 'MOSFET' } },
+                    { text: "Wire the divider, Drain resistor, and Source to Ground (at least 4 wires).", check: s => s.wireCount >= 4, expect: { kind: 'wire' } },
+                    { text: "Click 'EXECUTE ANALYSIS' to check the DC bias point.", check: s => s.hasRun, expect: { kind: 'run' } }
+                ]
             },
             DIGITAL_LOGIC: {
-                name: "5. Digital Logic (Conceptual IC Testing)",
+                name: "Bonus Practice: Conceptual IC Testing",
                 goal: "Place an IC Logic Chip, Digital Input, and Digital Output to test logic gates.",
+                steps: [
+                    { text: "Click the IC button and select a 74LS logic chip to place.", check: s => s.components.some(c => c.type === 'IC'), expect: { kind: 'place', type: 'IC' } },
+                    { text: "Place a Digital Input component and wire it to an IC input pin.", check: s => s.components.some(c => c.type === 'DigitalInput'), expect: { kind: 'place', type: 'DigitalInput' } },
+                    { text: "Place a Digital Output component and wire it to the IC output pin.", check: s => s.components.some(c => c.type === 'DigitalOutput'), expect: { kind: 'place', type: 'DigitalOutput' } },
+                    { text: "Wire the components together (at least 2 wires).", check: s => s.wireCount >= 2, expect: { kind: 'wire' } },
+                    { text: "Toggle the Digital Inputs, then click 'EXECUTE ANALYSIS' to verify.", check: s => s.hasRun, expect: { kind: 'run' } }
+                ]
             }
         };
 
@@ -1267,7 +2068,253 @@ async function sendMessageToGemini(inputParam) {
             document.getElementById('experiment-select').value = currentExperimentKey;
 
             resizeCanvas();
+            initFunctionGeneratorCRO();
         };
+
+        /**
+         * Function Generator + CRO (oscilloscope): a real, independent
+         * instrument - not part of the DC netlist solver. It draws the
+         * actual waveform live on a canvas based on the generator's
+         * waveform/frequency/amplitude/time-div controls, exactly like a
+         * real benchtop CRO would display what the generator produces.
+         */
+        // Persisted across re-opens of the Measurements Lab so we never stack
+        // multiple animation loops on top of each other.
+        let croAnimId = null;
+        let croRunning = true;
+
+        // Cursor measurement state (shared globally so the Measure menu
+        // buttons in the HTML can control them directly)
+        let cursorMode = null;      // null | 'voltage' | 'time'
+        let cursorA = null;         // pixel position (y for voltage, x for time)
+        let cursorB = null;
+        let draggingCursor = null;  // 'A' | 'B' | null
+        let croRedraw = null;       // set to the live drawWave() so global functions can trigger a redraw
+
+        function toggleMeasureMenu() {
+            const menu = document.getElementById('cro-measure-submenu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        function activateCursorMode(mode) {
+            const canvas = document.getElementById('cro-canvas');
+            if (!canvas) return;
+            cursorMode = mode;
+            if (mode === 'voltage') {
+                cursorA = canvas.height * 0.3;
+                cursorB = canvas.height * 0.7;
+            } else {
+                cursorA = canvas.width * 0.3;
+                cursorB = canvas.width * 0.7;
+            }
+            document.getElementById('cro-cursor-delete-bar').classList.remove('hidden');
+            document.getElementById('cro-cursor-readout').classList.remove('hidden');
+            document.querySelectorAll('.cro-measure-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = [...document.querySelectorAll('.cro-measure-btn')].find(b => b.textContent.toLowerCase().includes(mode === 'voltage' ? 'voltage' : 'time'));
+            if (activeBtn) activeBtn.classList.add('active');
+            if (croRedraw) croRedraw();
+        }
+
+        function clearCursors() {
+            cursorMode = null;
+            cursorA = null;
+            cursorB = null;
+            draggingCursor = null;
+            document.getElementById('cro-cursor-delete-bar').classList.add('hidden');
+            document.getElementById('cro-cursor-readout').classList.add('hidden');
+            document.querySelectorAll('.cro-measure-btn').forEach(b => b.classList.remove('active'));
+            if (croRedraw) croRedraw();
+        }
+
+        /** Inverse of the voltage-to-pixel scaling used when drawing the trace */
+        function croPixelToVoltage(py, h) {
+            return ((h / 2 - py) / ((h / 2) * 0.85)) * 10;
+        }
+
+        function initFunctionGeneratorCRO() {
+            const waveformSel = document.getElementById('fg-waveform');
+            const freqSlider = document.getElementById('fg-frequency');
+            const ampSlider = document.getElementById('fg-amplitude');
+            const timeDivSlider = document.getElementById('fg-timediv');
+            const canvas = document.getElementById('cro-canvas');
+            const runToggle = document.getElementById('cro-run-toggle');
+            if (!waveformSel || !canvas) return; // Panel not present in this build state
+            const ctx = canvas.getContext('2d');
+
+            // Stop any previous loop before starting a fresh one
+            if (croAnimId) cancelAnimationFrame(croAnimId);
+
+            function drawGrid() {
+                const w = canvas.width, h = canvas.height;
+                ctx.strokeStyle = 'rgba(34, 197, 94, 0.15)';
+                ctx.lineWidth = 1;
+                for (let x = 0; x <= w; x += w / 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+                for (let y = 0; y <= h; y += h / 8) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+                ctx.strokeStyle = 'rgba(34, 197, 94, 0.4)';
+                ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+            }
+
+            function waveformValue(type, phase) {
+                const t = phase % 1;
+                switch (type) {
+                    case 'square': return t < 0.5 ? 1 : -1;
+                    case 'triangle': return t < 0.5 ? (4 * t - 1) : (3 - 4 * t);
+                    default: return Math.sin(2 * Math.PI * t); // sine
+                }
+            }
+
+            // timeOffsetMs advances every animation frame while running, so the
+            // trace visibly scrolls like a real live oscilloscope sweep.
+            let timeOffsetMs = 0;
+            let lastFrameTime = performance.now();
+
+            function drawWave() {
+                const w = canvas.width, h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+                drawGrid();
+
+                const type = waveformSel.value;
+                const freq = parseFloat(freqSlider.value);       // Hz
+                const amp = parseFloat(ampSlider.value);         // V
+                const timeDiv = parseFloat(timeDivSlider.value); // ms per division (10 divisions across)
+                const totalTimeMs = timeDiv * 10;
+                const periodMs = 1000 / freq;
+
+                // Live readouts - always reflect the CURRENT slider values,
+                // updating instantly the moment amplitude/frequency change.
+                document.getElementById('fg-freq-label').textContent = freq.toFixed(0);
+                document.getElementById('fg-amp-label').textContent = amp.toFixed(1);
+                document.getElementById('fg-timediv-label').textContent = timeDiv.toFixed(2);
+                document.getElementById('cro-vpp').textContent = `${(amp * 2).toFixed(1)} V`;
+                document.getElementById('cro-freq').textContent = `${freq.toFixed(0)} Hz`;
+                document.getElementById('cro-period').textContent = `${periodMs.toFixed(2)} ms`;
+
+                ctx.strokeStyle = '#4ade80';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                for (let px = 0; px <= w; px++) {
+                    const tMs = timeOffsetMs + (px / w) * totalTimeMs;
+                    const phase = tMs / periodMs;
+                    const v = waveformValue(type, phase) * amp;
+                    const py = h / 2 - (v / 10) * (h / 2) * 0.85; // scale so +/-10V roughly fits the screen
+                    if (px === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+
+                // "Live" badge so it's clear the trace is actually running
+                ctx.fillStyle = croRunning ? '#4ade80' : '#f87171';
+                ctx.font = 'bold 11px monospace';
+                ctx.fillText(croRunning ? '● LIVE' : '■ STOPPED', 10, 16);
+
+                // --- Cursor measurement lines + reading table ---
+                if (cursorMode === 'voltage' && cursorA !== null && cursorB !== null) {
+                    [ [cursorA, '#fbbf24'], [cursorB, '#38bdf8'] ].forEach(([yPos, color]) => {
+                        ctx.strokeStyle = color;
+                        ctx.setLineDash([6, 4]);
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath(); ctx.moveTo(0, yPos); ctx.lineTo(w, yPos); ctx.stroke();
+                        ctx.setLineDash([]);
+                    });
+                    const voltA = croPixelToVoltage(cursorA, h);
+                    const voltB = croPixelToVoltage(cursorB, h);
+                    const dV = Math.abs(voltA - voltB);
+                    const labelEl = document.getElementById('cro-cursor-readout-label');
+                    if (labelEl) labelEl.textContent = 'Voltage Cursors (drag lines up/down) - ΔV = Amplitude between them';
+                    document.getElementById('cro-cursor-a-val').textContent = `${voltA.toFixed(2)} V`;
+                    document.getElementById('cro-cursor-b-val').textContent = `${voltB.toFixed(2)} V`;
+                    document.getElementById('cro-cursor-delta-val').textContent = `${dV.toFixed(2)} V`;
+                } else if (cursorMode === 'time' && cursorA !== null && cursorB !== null) {
+                    [ [cursorA, '#fbbf24'], [cursorB, '#38bdf8'] ].forEach(([xPos, color]) => {
+                        ctx.strokeStyle = color;
+                        ctx.setLineDash([6, 4]);
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath(); ctx.moveTo(xPos, 0); ctx.lineTo(xPos, h); ctx.stroke();
+                        ctx.setLineDash([]);
+                    });
+                    const tA = (cursorA / w) * totalTimeMs;
+                    const tB = (cursorB / w) * totalTimeMs;
+                    const dT = Math.abs(tB - tA);
+                    const measuredFreq = dT > 0 ? 1000 / dT : 0;
+                    const labelEl = document.getElementById('cro-cursor-readout-label');
+                    if (labelEl) labelEl.textContent = 'Time Cursors (drag lines left/right) - ΔT = Period, 1/ΔT = Frequency';
+                    document.getElementById('cro-cursor-a-val').textContent = `${tA.toFixed(3)} ms`;
+                    document.getElementById('cro-cursor-b-val').textContent = `${tB.toFixed(3)} ms`;
+                    document.getElementById('cro-cursor-delta-val').textContent = `${dT.toFixed(3)} ms (${measuredFreq.toFixed(1)} Hz)`;
+                }
+            }
+            croRedraw = drawWave; // let the global Measure-menu functions trigger a redraw
+
+            // Cursor dragging - bind only once even if this init runs again on re-open
+            if (!canvas.dataset.cursorBound) {
+                canvas.dataset.cursorBound = '1';
+                const CURSOR_HIT_PX = 12;
+
+                canvas.addEventListener('mousedown', (e) => {
+                    if (!cursorMode) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+                    const mx = (e.clientX - rect.left) * scaleX;
+                    const my = (e.clientY - rect.top) * scaleY;
+                    if (cursorMode === 'voltage') {
+                        if (Math.abs(my - cursorA) < CURSOR_HIT_PX) draggingCursor = 'A';
+                        else if (Math.abs(my - cursorB) < CURSOR_HIT_PX) draggingCursor = 'B';
+                    } else if (cursorMode === 'time') {
+                        if (Math.abs(mx - cursorA) < CURSOR_HIT_PX) draggingCursor = 'A';
+                        else if (Math.abs(mx - cursorB) < CURSOR_HIT_PX) draggingCursor = 'B';
+                    }
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    if (!draggingCursor || !cursorMode) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+                    const mx = (e.clientX - rect.left) * scaleX;
+                    const my = (e.clientY - rect.top) * scaleY;
+                    if (cursorMode === 'voltage') {
+                        const val = Math.max(0, Math.min(canvas.height, my));
+                        if (draggingCursor === 'A') cursorA = val; else cursorB = val;
+                    } else {
+                        const val = Math.max(0, Math.min(canvas.width, mx));
+                        if (draggingCursor === 'A') cursorA = val; else cursorB = val;
+                    }
+                    if (croRedraw) croRedraw();
+                });
+
+                window.addEventListener('mouseup', () => { draggingCursor = null; });
+            }
+
+            function animationLoop(now) {
+                const dt = now - lastFrameTime;
+                lastFrameTime = now;
+                if (croRunning) {
+                    timeOffsetMs += dt; // real elapsed time -> a genuinely live, scrolling sweep
+                    drawWave();
+                }
+                croAnimId = requestAnimationFrame(animationLoop);
+            }
+
+            [waveformSel, freqSlider, ampSlider, timeDivSlider].forEach(el => {
+                // Redraw the instant a control changes, even while paused, so
+                // "live reading" behavior holds whether running or stopped.
+                el.addEventListener('input', drawWave);
+            });
+
+            if (runToggle) {
+                runToggle.onclick = () => {
+                    croRunning = !croRunning;
+                    runToggle.textContent = croRunning ? '⏸ STOP' : '▶ RUN';
+                    runToggle.classList.toggle('cro-run-active', croRunning);
+                    lastFrameTime = performance.now();
+                    drawWave();
+                };
+                runToggle.textContent = croRunning ? '⏸ STOP' : '▶ RUN';
+                runToggle.classList.toggle('cro-run-active', croRunning);
+            }
+
+            drawWave();
+            lastFrameTime = performance.now();
+            croAnimId = requestAnimationFrame(animationLoop);
+        }
 
 
         /**
@@ -1380,33 +2427,65 @@ async function sendMessageToGemini(inputParam) {
             ctx.lineWidth = 2;
 
             if (comp.type === 'Resistor') {
-                // Resistor: Zig-zag symbol
-                ctx.beginPath();
-                const num_segments = 7;
-                const segment_width = componentLength / (num_segments - 1);
-                const zig_zag_height = 10;
-                
-                // Draw connecting leads
-                ctx.moveTo(-halfW, 0);
-                ctx.lineTo(-componentLength / 2, 0);
-                ctx.moveTo(componentLength / 2, 0);
-                ctx.lineTo(halfW, 0);
+                // Real-world style: tan/beige body with color bands + leads
+                const bodyW = componentLength * 0.62;
+                const bodyH = 15;
 
-                // Draw the zig-zag
-                ctx.moveTo(-componentLength / 2, 0);
-                for (let i = 0; i < num_segments; i++) {
-                    const x = -componentLength / 2 + i * segment_width;
-                    const y = i % 2 === 0 ? 0 : (i % 4 === 1 ? zig_zag_height : -zig_zag_height);
-                    if (i > 0 && i < num_segments - 1) {
-                        ctx.lineTo(x, y);
-                    }
-                }
-                ctx.lineTo(componentLength / 2, 0);
+                // Leads
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-halfW, 0);
+                ctx.lineTo(-bodyW / 2, 0);
+                ctx.moveTo(bodyW / 2, 0);
+                ctx.lineTo(halfW, 0);
                 ctx.stroke();
 
+                // Body (rounded rect, tan)
+                ctx.fillStyle = '#e8c496';
+                ctx.strokeStyle = '#a9865a';
+                ctx.lineWidth = 1.5;
+                const r = 6;
+                ctx.beginPath();
+                ctx.moveTo(-bodyW / 2 + r, -bodyH / 2);
+                ctx.lineTo(bodyW / 2 - r, -bodyH / 2);
+                ctx.arcTo(bodyW / 2, -bodyH / 2, bodyW / 2, -bodyH / 2 + r, r);
+                ctx.lineTo(bodyW / 2, bodyH / 2 - r);
+                ctx.arcTo(bodyW / 2, bodyH / 2, bodyW / 2 - r, bodyH / 2, r);
+                ctx.lineTo(-bodyW / 2 + r, bodyH / 2);
+                ctx.arcTo(-bodyW / 2, bodyH / 2, -bodyW / 2, bodyH / 2 - r, r);
+                ctx.lineTo(-bodyW / 2, -bodyH / 2 + r);
+                ctx.arcTo(-bodyW / 2, -bodyH / 2, -bodyW / 2 + r, -bodyH / 2, r);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Color bands (visual only - derived from value for a bit of realism)
+                const bandColors = ['#8B4513', '#000000', '#DC2626', '#D4AF37']; // brown, black, red, gold (tolerance)
+                const bandXs = [-bodyW * 0.28, -bodyW * 0.10, bodyW * 0.10, bodyW * 0.32];
+                bandXs.forEach((bx, i) => {
+                    ctx.fillStyle = bandColors[i];
+                    ctx.fillRect(bx - 1.5, -bodyH / 2, 3, bodyH);
+                });
+
             } else if (comp.type === 'Battery') {
-                // Battery: Long/short bar symbol
+                // Real-world style: small cell casing behind the +/- bars
                 const bar_width = 25;
+                const caseW = componentLength * 0.5;
+                const caseH = 18;
+
+                ctx.fillStyle = '#dbeafe';
+                ctx.strokeStyle = '#1d4ed8';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect ? ctx.roundRect(-caseW / 2, -caseH / 2, caseW, caseH, 4) : ctx.rect(-caseW / 2, -caseH / 2, caseW, caseH);
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = '#1d4ed8';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('9V', 0, 0);
 
                 // Positive terminal (Node 1 - Right side)
                 ctx.strokeStyle = '#000';
@@ -1453,24 +2532,22 @@ async function sendMessageToGemini(inputParam) {
                 ctx.stroke();
 
             } else if (comp.type === 'Capacitor') {
-                // Capacitor: Two parallel lines
-                ctx.strokeStyle = def.color;
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.moveTo(-componentLength / 2 + 5, -halfH);
-                ctx.lineTo(-componentLength / 2 + 5, halfH);
-                ctx.moveTo(componentLength / 2 - 5, -halfH);
-                ctx.lineTo(componentLength / 2 - 5, halfH);
-                ctx.stroke();
-                ctx.lineWidth = 2;
+                // Real-world style: small ceramic disc body + leads
                 ctx.strokeStyle = '#000';
-                
-                // Connecting leads
+                ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(-halfW, 0);
-                ctx.lineTo(-componentLength / 2 + 5, 0);
-                ctx.moveTo(componentLength / 2 - 5, 0);
+                ctx.lineTo(-11, 0);
+                ctx.moveTo(11, 0);
                 ctx.lineTo(halfW, 0);
+                ctx.stroke();
+
+                ctx.fillStyle = '#60a5fa';
+                ctx.strokeStyle = '#1e40af';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 11, halfH * 0.9, 0, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.stroke();
             } else if (comp.type === 'LED') {
                 // LED: Circle/Bulb shape with arrows
@@ -1591,19 +2668,38 @@ async function sendMessageToGemini(inputParam) {
                 ctx.fillStyle = comp.state.gateOn ? '#93C5FD' : '#FFFFFF';
                 ctx.fillRect(channelX - 1, -halfH + 5, 2, halfH * 2 - 10);
 
-            } else if (comp.type === 'IC' || comp.type === 'DigitalInput' || comp.type === 'DigitalOutput') {
-                // IC and Digital I/O: Simple Rectangular Chip/Interface
+            } else if (comp.type === 'IC') {
+                // Real-world style: black DIP chip body with pin legs + notch
+                ctx.fillStyle = '#1f2937';
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 1.5;
+                ctx.fillRect(-halfW, -halfH, def.width, def.height);
+                ctx.strokeRect(-halfW, -halfH, def.width, def.height);
+
+                // Pin legs along top and bottom edges
+                ctx.fillStyle = '#c0c0c0';
+                const legCount = 4;
+                for (let i = 0; i < legCount; i++) {
+                    const lx = -halfW + (def.width / (legCount + 1)) * (i + 1);
+                    ctx.fillRect(lx - 1.5, -halfH - 5, 3, 5);
+                    ctx.fillRect(lx - 1.5, halfH, 3, 5);
+                }
+
+                // Pin-1 notch (top-left corner dot, standard DIP convention)
+                ctx.beginPath();
+                ctx.arc(-halfW + 6, -halfH, 5, Math.PI, 0, false);
+                ctx.fillStyle = '#1f2937';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(-halfW + 6, -halfH + 6, 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#9ca3af';
+                ctx.fill();
+
+            } else if (comp.type === 'DigitalInput' || comp.type === 'DigitalOutput') {
+                // Digital I/O: Simple Rectangular Interface
                 ctx.fillStyle = def.color;
                 ctx.fillRect(-halfW, -halfH, def.width, def.height);
                 ctx.strokeRect(-halfW, -halfH, def.width, def.height);
-                
-                // Draw pin notch (top center) for IC only
-                if (comp.type === 'IC') {
-                    ctx.beginPath();
-                    ctx.arc(0, -halfH, 5, Math.PI, 0, false);
-                    ctx.fillStyle = '#000';
-                    ctx.fill();
-                }
 
             } else if (comp.type === 'VCC') {
                 // VCC Rail Symbol (Triangle/Arrow up, centered)
@@ -2128,8 +3224,9 @@ async function sendMessageToGemini(inputParam) {
         document.getElementById('delete-component').addEventListener('click', () => {
             if (!selectedComponent) return;
             const compToDelete = selectedComponent;
+            const screenPos = canvasPointToScreen(compToDelete.x, compToDelete.y);
 
-            showCustomConfirm(`Are you sure you want to delete the selected ${compToDelete.type}? This will also remove any attached wires.`, (confirmed) => {
+            showInlineConfirm(screenPos.x, screenPos.y, `Delete the selected ${compToDelete.type}? This also removes any attached wires.`, (confirmed) => {
                 if (confirmed) {
                     // Remove component from the main array
                     components = components.filter(c => c.id !== compToDelete.id);
@@ -2148,10 +3245,76 @@ async function sendMessageToGemini(inputParam) {
         });
 
         // --- Canvas Click Handler (Placing, Connecting, Selecting, Toggling) ---
-        canvas.addEventListener('click', (e) => {
+        // --- Component Dragging (move placed parts anywhere on the canvas) ---
+        let draggingComponent = null;
+        let dragMoved = false;
+        let suppressNextClick = false;
+        let dragOffset = { x: 0, y: 0 };
+
+        canvas.addEventListener('mousedown', (e) => {
+            // Don't start a drag while actively placing a new part or wiring nodes -
+            // those flows are click-driven and shouldn't be interrupted.
+            if (placingComponent || connectingNode) return;
+
             const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const mx = (e.clientX - rect.left) * scaleX;
+            const my = (e.clientY - rect.top) * scaleY;
+
+            const comp = findComponent(mx, my);
+            if (comp) {
+                draggingComponent = comp;
+                dragMoved = false;
+                dragOffset.x = mx - comp.x;
+                dragOffset.y = my - comp.y;
+                canvas.style.cursor = 'grabbing';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!draggingComponent) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const mx = (e.clientX - rect.left) * scaleX;
+            const my = (e.clientY - rect.top) * scaleY;
+
+            draggingComponent.x = mx - dragOffset.x;
+            draggingComponent.y = my - dragOffset.y;
+            dragMoved = true;
+            drawCircuit();
+        });
+
+        function endComponentDrag() {
+            if (!draggingComponent) return;
+            // Snap to grid on release, same as when a part is first placed
+            const snapped = getGridCoords(draggingComponent.x, draggingComponent.y);
+            draggingComponent.x = snapped.x;
+            draggingComponent.y = snapped.y;
+            canvas.style.cursor = 'default';
+            drawCircuit();
+            if (dragMoved) {
+                suppressNextClick = true; // the upcoming 'click' event is the tail end of this drag, not a real click
+                runSimulation();
+                callFriendAssistant(`User moved the ${draggingComponent.type} to a new position.`);
+            }
+            draggingComponent = null;
+            dragMoved = false;
+        }
+        canvas.addEventListener('mouseup', endComponentDrag);
+        canvas.addEventListener('mouseleave', endComponentDrag);
+
+        canvas.addEventListener('click', (e) => {
+            // If we just finished dragging a component, swallow this click so
+            // it doesn't also open the editor / toggle the part underneath.
+            if (suppressNextClick) { suppressNextClick = false; return; }
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clickX = (e.clientX - rect.left) * scaleX;
+            const clickY = (e.clientY - rect.top) * scaleY;
             const gridCoords = getGridCoords(clickX, clickY);
 
             // 1. Placing a new component
@@ -2283,7 +3446,7 @@ async function sendMessageToGemini(inputParam) {
             const clickedWire = findWire(clickX, clickY);
             if (clickedWire) {
                 hideComponentEditor(); 
-                showCustomConfirm("Do you want to delete this wire connection?", (confirmed) => {
+                showInlineConfirm(e.clientX, e.clientY, "Delete this wire connection?", (confirmed) => {
                     if (confirmed) {
                         components = components.filter(c => c.id !== clickedWire.id);
                         drawCircuit();
@@ -2542,8 +3705,9 @@ async function sendMessageToGemini(inputParam) {
 
         /** Runs the DC circuit simulation based on Ohm's Law and component states. */
         function runSimulation() {
+            hasRunSimulation = true;
             // If in Digital Logic mode, skip complex DC calculations and run conceptual update
-            if (currentExperimentKey === 'DIGITAL_LOGIC') {
+            if (currentExperimentKey === 'DIGITAL_LOGIC' || currentExperimentKey === 'LOGIC_GATES') {
                 runDigitalSimulation();
                 return;
             }
@@ -2734,6 +3898,28 @@ async function sendMessageToGemini(inputParam) {
                          meter.state.reading = '--';
                     }
                 }
+                else if (meter.state.mode === 'Ω') {
+                    if (meterConnections.length === 2) {
+                        const connectedComponentId = meterConnections
+                            .map(c => c.from.id === meter.id ? c.to.id : c.from.id)
+                            .find((id, index, self) => self.indexOf(id) === index && id !== meter.id);
+                        const connectedComponent = components.find(c => c.id === connectedComponentId);
+                        if (connectedComponent && ComponentTypes[connectedComponent.type].R_equiv) {
+                            const R_comp = ComponentTypes[connectedComponent.type].R_equiv(connectedComponent.value);
+                            meter.state.reading = (R_comp === Infinity) ? '--' : R_comp;
+                            if (R_comp !== Infinity) {
+                                maxMeterReading = Math.max(maxMeterReading, meter.state.reading);
+                                maxMeterUnit = 'Ω';
+                                isMeterUsed = true;
+                            }
+                        } else {
+                            meter.state.reading = '--';
+                        }
+                    } else {
+                        meter.state.reading = '--';
+                    }
+                }
+
             });
 
             multimeterOutput.textContent = isMeterUsed ? `MULTIMETER: ${maxMeterReading.toFixed(3)}${maxMeterUnit}` : 'MULTIMETER: --';
@@ -2748,11 +3934,17 @@ async function sendMessageToGemini(inputParam) {
         // --- Core Application Functions ---
         
         /** Resets the entire circuit and simulation state. */
+        let hasRunSimulation = false; // tracks whether "EXECUTE ANALYSIS" has been clicked since last reset
+        let friendStepIndex = 0;      // which ordered step of the current experiment we're on
+        let lastFriendSnapshot = null; // previous circuit snapshot, used to detect wrong-step mistakes
+
         function resetCircuit() {
             components = [];
             placingComponent = null;
             selectedComponent = null;
             connectingNode = null;
+            hasRunSimulation = false;
+            friendStepIndex = 0; lastFriendSnapshot = null;
             // Reset Digital I/O state
             digitalInputs = Array(NUM_DIGITAL_IO).fill(0);
             digitalOutputs = Array(NUM_DIGITAL_IO).fill(0);
@@ -2768,6 +3960,7 @@ async function sendMessageToGemini(inputParam) {
         function updateExperiment(key) {
             currentExperimentKey = key;
             const exp = EXPERIMENTS[key];
+            friendStepIndex = 0; lastFriendSnapshot = null;
             
             // 1. Update Title and Goal Text
             currentGoalText = exp.goal;
@@ -2778,7 +3971,7 @@ async function sendMessageToGemini(inputParam) {
             const analogPanel = document.getElementById('simulation-results-card');
             const digitalPanel = document.getElementById('digital-interface-panel');
             
-            if (key === 'DIGITAL_LOGIC') {
+            if (key === 'DIGITAL_LOGIC' || key === 'LOGIC_GATES') {
                 analogPanel.classList.add('hidden');
                 digitalPanel.classList.remove('hidden');
             } else {
@@ -2786,11 +3979,52 @@ async function sendMessageToGemini(inputParam) {
                 digitalPanel.classList.add('hidden');
             }
 
-            // 3. 👇 NEW: Handle Experiment 1 Popup Logic
+            // 2b. Show/hide the Measurements-only Function Generator + CRO panel
+            const measurementsPanel = document.getElementById('measurements-panel');
+            if (measurementsPanel) {
+                measurementsPanel.classList.toggle('hidden', key !== 'MEASUREMENTS');
+            }
+
+            // 2c. Coming-soon experiments: show a friendly placeholder instead of the live canvas
+            const comingSoonPanel = document.getElementById('coming-soon-panel');
+            const canvasAnchor = document.getElementById('main-canvas-anchor');
+            if (comingSoonPanel && canvasAnchor) {
+                if (exp.comingSoon) {
+                    comingSoonPanel.classList.remove('hidden');
+                    canvasAnchor.classList.add('hidden');
+                    document.getElementById('coming-soon-title').textContent = exp.name;
+                } else {
+                    comingSoonPanel.classList.add('hidden');
+                    canvasAnchor.classList.remove('hidden');
+                }
+            }
+
+            // 3. Handle Experiment 1 Popup Logic
             if (key === 'EXP_1_THEORY') {
                 openExperimentOne(); // Open the window
             } else {
                 closeExperimentOne(); // Close it if they switch to something else
+            }
+
+            // 3b. Handle Measurements Lab Popup Logic (its own dedicated window)
+            if (key === 'MEASUREMENTS') {
+                openMeasurementsLab();
+            } else {
+                closeMeasurementsLab();
+            }
+
+            // 3c. Handle Diode V-I Lab Popup Logic (its own dedicated window)
+            if (key === 'DIODE_VI') {
+                openDiodeLab();
+            } else {
+                closeDiodeLab();
+            }
+
+            if (exp.comingSoon) {
+                if (document.getElementById('friend-response-area')) {
+                    appendChatMessage('friend-response-area', `<p class="chat-bubble text-gray-700 text-sm">🚧 "${exp.name}" is coming soon - not built yet, so there's nothing to guide you through here.</p>`);
+                }
+                return;
             }
 
             // 4. Reset Circuit Logic
@@ -2838,7 +4072,7 @@ async function sendMessageToGemini(inputParam) {
                 
                 // Display response IF a response area was provided
                 if (text && text !== "API_ERROR" && responseArea) {
-                    responseArea.innerHTML = `<p class="chat-bubble text-gray-700 text-sm">${text}</p>`;
+                    appendChatMessage(responseAreaId, `<p class="chat-bubble text-gray-700 text-sm">${text}</p>`);
                     responseArea.scrollTop = responseArea.scrollHeight;
                 }
                 
@@ -2848,7 +4082,7 @@ async function sendMessageToGemini(inputParam) {
             } catch (error) {
                 console.error("Backend API Error:", error);
                 if (responseArea) {
-                    responseArea.innerHTML = `<p class="chat-bubble text-warning-red text-sm">Error connecting to the Assistant. (${error.message})</p>`;
+                    appendChatMessage(responseAreaId, `<p class="chat-bubble text-warning-red text-sm">Error connecting to the Assistant. (${error.message})</p>`);
                 }
                 if (loadingIndicator) loadingIndicator.classList.add('hidden');
                 return "API_ERROR";
@@ -2900,10 +4134,13 @@ async function sendMessageToGemini(inputParam) {
          * @param {string} action - The last action performed by the user (or transcribed speech query).
          * @param {number} [frustrationLevel=3] - User's perceived frustration level (1=Calm, 10=Frustrated).
          */
-        async function callFriendAssistant(action, frustrationLevel = 3) {
-            lastAction = action; 
-            
-            // 1. Prepare Circuit State Context
+        /**
+         * Builds a plain, structured snapshot of what's really on the canvas
+         * right now (components + wiring + whether Run has been clicked),
+         * used both by the deterministic step-checks and by the LLM when a
+         * direct question needs answering.
+         */
+        function getCircuitSnapshot() {
             const simpleCircuitState = components
                 .filter(c => c.type !== 'Wire')
                 .map(c => ({
@@ -2911,80 +4148,203 @@ async function sendMessageToGemini(inputParam) {
                     node0Connected: components.some(w => w.type === 'Wire' && w.from && w.to && (w.from.id === c.id && w.from.node === 0 || w.to.id === c.id && w.to.node === 0)),
                     node1Connected: components.some(w => w.type === 'Wire' && w.from && w.to && (w.from.id === c.id && w.from.node === 1 || w.to.id === c.id && w.to.node === 1)),
                     node2Connected: c.type === 'MOSFET' ? components.some(w => w.type === 'Wire' && w.from && w.to && (w.from.id === c.id && w.from.node === 2 || w.to.id === c.id && w.to.node === 2)) : false,
-                    state: c.state ? JSON.stringify(c.state) : 'N/A' 
+                    mode: c.state && c.state.mode ? c.state.mode : null
                 }));
+            return {
+                components: simpleCircuitState,
+                wireCount: components.filter(c => c.type === 'Wire').length,
+                digitalInputs: digitalInputs,
+                hasRun: hasRunSimulation
+            };
+        }
 
-            const circuitContext = JSON.stringify(simpleCircuitState, null, 2);
-            const inputStateString = digitalInputs.join('');
-            
-            // 2. Adjust Guidance based on Frustration Level
-            let guidanceTone;
-            if (frustrationLevel >= 9) {
-                guidanceTone = "Student is EXTREMELY frustrated (9-10). Give the ABSOLUTE SIMPLEST single action (like 'Click Battery button' or 'Place component here'). ONE sentence ONLY. No explanations. Just tell them exactly what to do right now.";
-            } else if (frustrationLevel >= 7) {
-                guidanceTone = "Student is very frustrated (7-8). Give ONE simple step at a time with minimal explanation. Be direct and clear. Example: 'Place the Battery first, then add the Resistor.' Maximum 2 sentences.";
-            } else if (frustrationLevel >= 5) {
-                guidanceTone = "Student is frustrated (5-6). Give clear, simple 2-3 step guidance. Keep it straightforward and encouraging. Break down the task into easy actions.";
-            } else {
-                guidanceTone = "Student is calm (1-4). Give brief guidance or answer questions directly in 2-3 sentences. Include helpful context.";
+        function describeCircuitState(state) {
+            if (state.components.length === 0) return "The canvas is completely empty. No components have been placed yet.";
+            return state.components.map(c => {
+                const wired = [];
+                if (c.node0Connected) wired.push('terminal 1 wired');
+                if (c.node1Connected) wired.push('terminal 2 wired');
+                if (c.nodes >= 3 && c.node2Connected) wired.push('terminal 3 wired');
+                const wiredStr = wired.length ? wired.join(', ') : 'not wired yet';
+                const modeStr = c.mode && c.mode !== 'None' ? `, mode: ${c.mode}` : '';
+                return `- ${c.type}${c.value !== undefined ? ` (${c.value})` : ''}: ${wiredStr}${modeStr}.`;
+            }).join('\n');
+        }
+
+        /**
+         * Appends a new bubble to an assistant panel's chat log instead of
+         * replacing its contents - so past questions/answers stay visible,
+         * and closing/reopening the drawer never erases anything (the drawer
+         * toggle only slides the panel, it never touches this DOM content).
+         */
+        function appendChatMessage(areaId, html) {
+            const area = document.getElementById(areaId);
+            if (!area) return;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'chat-log-entry';
+            wrapper.innerHTML = html;
+            area.appendChild(wrapper);
+            area.scrollTop = area.scrollHeight;
+        }
+
+        function toSingleLine(text, maxLen = 160) {
+            if (!text) return text;
+            let t = text.replace(/\r?\n+/g, ' ').replace(/\s+/g, ' ').trim();
+            const firstSentence = t.match(/^.*?[.!?](?=\s|$)/);
+            if (firstSentence && firstSentence[0].length > 0) t = firstSentence[0];
+            if (t.length > maxLen) t = t.slice(0, maxLen - 1).trim() + '…';
+            return t;
+        }
+
+        /**
+         * Friend Assistant: reads the REAL canvas/circuit state and walks the
+         * student through the experiment's real steps one at a time.
+         * - Step progression is deterministic (based on the actual circuit),
+         *   never guessed by an LLM: a step only advances once its check()
+         *   passes against the real component/wire data.
+         * - The LLM is only called when the user asks an actual question or
+         *   reports being stuck (a "doubt"), so it can explain / help debug.
+         */
+        /**
+         * Compares the circuit snapshot BEFORE and AFTER the user's last
+         * action against what the current step actually expects. Returns a
+         * warning string if the action looks wrong, or null if it looks fine
+         * (or there isn't enough info yet to tell).
+         */
+        function detectMistake(step, prevSnapshot, snapshot) {
+            if (!step || !step.expect || !prevSnapshot) return null;
+
+            if (step.expect.kind === 'place') {
+                const prevIds = new Set(prevSnapshot.components.map(c => c.id));
+                const newComps = snapshot.components.filter(c => !prevIds.has(c.id));
+                const wrongComp = newComps.find(c => c.type !== step.expect.type);
+                if (wrongComp) {
+                    return `⚠️ That's a ${wrongComp.type}, not a ${step.expect.type} - this step needs a ${step.expect.type}. Delete it and place the right part.`;
+                }
             }
-            
-            // Detect if this is a direct question vs general action
+
+            if (step.expect.kind === 'wire') {
+                if (snapshot.wireCount > prevSnapshot.wireCount) {
+                    return `⚠️ That wire doesn't complete the connection this step needs yet - double check which terminals you joined.`;
+                }
+            }
+
+            if (step.expect.kind === 'mode') {
+                const prevMeter = prevSnapshot.components.find(c => c.type === 'Multimeter');
+                const meter = snapshot.components.find(c => c.type === 'Multimeter');
+                if (meter && prevMeter && meter.mode !== prevMeter.mode && (!meter.mode || meter.mode === 'None')) {
+                    return `⚠️ The Multimeter still needs a mode selected (Voltmeter or Ohmmeter) before you Save.`;
+                }
+            }
+
+            return null;
+        }
+
+        async function callFriendAssistant(action, frustrationLevel = 3) {
+            lastAction = action;
+            const responseArea = document.getElementById('friend-response-area');
+            const exp = EXPERIMENTS[currentExperimentKey];
+            const snapshot = getCircuitSnapshot();
             const isDirectQuestion = action.includes('typed a specific question') || action.includes('User spoke');
-            
-           // 3. Define the System Prompt
-// 3. Define the Detailed System Prompt
-            // 3. Define the Minimalist System Prompt
-// 3. Define the Strict Action-Only System Prompt
-const systemPrompt = `You are Friend Assistant, a direct hands-on lab partner.
-Current Experiment Goal: ${currentGoalText}.
-Digital Inputs: ${inputStateString}.
 
-${isDirectQuestion ? 
-`The user asked a specific question. Answer it fully and explain concepts if asked. ${guidanceTone}` 
-: 
-`The user performed an action. Give the IMMEDIATE NEXT STEP only.
-STRICT RULES:
-1. NO component lists.
-2. NO theoretical explanations.
-3. NO "Let's review" or "Typically includes" chatter.
-4. Output EXACTLY 1-2 short sentences telling the user what to click or connect right now.
-${guidanceTone}`}
+            // --- Coming-soon experiments: nothing to guide yet ---
+            if (exp.comingSoon) {
+                if (responseArea) appendChatMessage('friend-response-area', `<p class="chat-bubble text-gray-700 text-sm">🚧 "${exp.name}" isn't built yet - nothing to guide you through here.</p>`);
+                return;
+            }
 
-Key Tasks:
-1. Analyze the circuit.
-2. Find the missing part.
-3. Tell the user to place/connect it.
+            const steps = exp.steps || [];
 
-IMPORTANT: Be brief. Do not lecture.`;
+            // --- Deterministic step advancement (only for real actions, not direct questions) ---
+            if (!isDirectQuestion && steps.length > 0) {
+                const prevSnapshot = lastFriendSnapshot;
+                const stepBeforeAdvancing = steps[friendStepIndex];
 
-const userQuery = `Current Circuit State (Components/Connections):\n${circuitContext}\n\nLast User Action: ${action}.`;
+                // Advance past any steps whose check() already passes (skips
+                // ahead if the user did several things at once), then show
+                // the first step that is NOT yet complete.
+                while (friendStepIndex < steps.length && steps[friendStepIndex].check(snapshot)) {
+                    friendStepIndex++;
+                }
 
-const payload = { contents: [{ parts: [{ text: userQuery }] }] };
-            // 4. Call the generic caller for the Friend Assistant
-            const text = await genericAPICaller(systemPrompt, payload, 'friend-response-area', 'friend-loading-indicator');
-            
+                let message;
+                if (friendStepIndex >= steps.length) {
+                    message = "✅ All steps complete! Review your results below.";
+                } else if (stepBeforeAdvancing && friendStepIndex === steps.indexOf(stepBeforeAdvancing)) {
+                    // Still on the same step as before this action - check whether
+                    // the action that just happened was actually a mistake.
+                    const mistake = detectMistake(stepBeforeAdvancing, prevSnapshot, snapshot);
+                    message = mistake || steps[friendStepIndex].text;
+                } else {
+                    message = steps[friendStepIndex].text;
+                }
+
+                lastFriendSnapshot = snapshot;
+
+                if (responseArea) {
+                    const isWarning = message.startsWith('⚠️');
+                    appendChatMessage('friend-response-area', `<p class="chat-bubble ${isWarning ? 'text-red-600' : 'text-gray-700'} text-sm">${message}</p>`);
+                }
+                return; // No LLM call needed - this is fully deterministic and instant.
+            }
+
+            lastFriendSnapshot = snapshot;
+
+            // --- Direct question / doubt: ground the LLM in the real circuit and step list ---
+            const circuitDescription = describeCircuitState(snapshot);
+            const stepsList = steps.map((s, i) => `${i + 1}. ${s.text}`).join('\n');
+
+            let guidanceTone;
+            if (frustrationLevel >= 9) guidanceTone = "Student is EXTREMELY frustrated. Be as blunt and simple as possible.";
+            else if (frustrationLevel >= 7) guidanceTone = "Student is very frustrated. Be direct and clear, no fluff.";
+            else if (frustrationLevel >= 5) guidanceTone = "Student is a bit frustrated. Be clear and encouraging.";
+            else guidanceTone = "Student is calm. Be friendly and brief.";
+
+            const systemPrompt = `You are Friend Assistant, a hands-on lab partner watching the student's circuit canvas live.
+
+Experiment: ${currentGoalText}
+
+The correct ordered steps to finish this experiment are:
+${stepsList || "(no fixed step list for this experiment - use the goal above)"}
+
+What is actually on the canvas right now:
+${circuitDescription}
+
+Digital Inputs currently: ${digitalInputs.join('')}.
+
+The user asked a direct question or said they're stuck - answer it or help debug, grounded in the real canvas state above.
+
+STRICT OUTPUT RULES:
+1. Reply in 1-3 short sentences, no more.
+2. No step numbers, no bullet lists, no generic theory dumps - be concrete and reference what's actually on the canvas.
+3. ${guidanceTone}`;
+
+            const userQuery = `Last User Action / Question: ${action}.`;
+            const payload = { contents: [{ parts: [{ text: userQuery }] }] };
+            const rawText = await genericAPICaller(systemPrompt, payload, null, 'friend-loading-indicator');
+            const text = (rawText && rawText !== "API_ERROR") ? toSingleLine(rawText, 260) : rawText;
+
+            if (responseArea) {
+                if (text && text !== "API_ERROR") {
+                    appendChatMessage('friend-response-area', `<p class="chat-bubble text-gray-700 text-sm">${text}</p>`);
+                } else {
+                    appendChatMessage('friend-response-area', `<p class="chat-bubble text-warning-red text-sm">Error connecting to the Assistant.</p>`);
+                }
+            }
+
             // --- Digital Output Parsing (Conceptual) ---
-            if (currentExperimentKey === 'DIGITAL_LOGIC' && text !== "API_ERROR" && text.includes('Output')) {
-                const newOutputs = [...digitalOutputs]; 
-                
-                // Regex to find "Output X is Y (Z)" or similar, looking for the state (0 or 1)
+            if ((currentExperimentKey === 'DIGITAL_LOGIC' || currentExperimentKey === 'LOGIC_GATES') && text && text !== "API_ERROR" && text.includes('Output')) {
+                const newOutputs = [...digitalOutputs];
                 const outputRegex = /Output\s+([0-7])\s+(?:is|will\s+be)\s+.*?(0|1)/gi;
                 let match;
                 while ((match = outputRegex.exec(text)) !== null) {
                     const index = parseInt(match[1]);
                     const state = parseInt(match[2]);
-                    if (index >= 0 && index < NUM_DIGITAL_IO) {
-                        newOutputs[index] = state;
-                    }
+                    if (index >= 0 && index < NUM_DIGITAL_IO) newOutputs[index] = state;
                 }
-                
-                // Update the global state and UI only if changes were parsed
                 if (newOutputs.join('') !== digitalOutputs.join('')) {
                     digitalOutputs = newOutputs;
-                    components.filter(c => c.type === 'DigitalOutput').forEach(comp => {
-                       comp.state.outputs = digitalOutputs;
-                    });
+                    components.filter(c => c.type === 'DigitalOutput').forEach(comp => { comp.state.outputs = digitalOutputs; });
                     updateDigitalIOUI();
                 }
             }
@@ -3872,6 +5232,248 @@ Consider the context: They are building electronic circuits and may be stuck on 
                 canvasContainer.className = "w-full overflow-hidden rounded-xl shadow-2xl border-4 border-slate-300 bg-[#F8F8FF]";
                 resizeCanvas();
             }
+        }
+
+        /** Opens the dedicated Measurements Lab window (CRO + Function Generator) */
+        function openMeasurementsLab() {
+            document.getElementById('measurements-modal').classList.remove('hidden');
+            callTeacherAssistant('Experiment_Overview', 'Measurements: CRO, Function Generator & Multimeter');
+            // Redraw once visible, since canvas sizing can be off while display:none
+            requestAnimationFrame(() => { if (typeof initFunctionGeneratorCRO === 'function') initFunctionGeneratorCRO(); });
+        }
+
+        function closeMeasurementsLab() {
+            document.getElementById('measurements-modal').classList.add('hidden');
+        }
+
+        /** Function Generator waveform selector buttons (Sine/Square/Triangle) */
+        function setFgWaveform(wave, btnEl) {
+            const select = document.getElementById('fg-waveform');
+            select.value = wave;
+            select.dispatchEvent(new Event('input'));
+            document.querySelectorAll('.fg-wave-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+        }
+
+        // =====================================================================
+        // DIODE V-I CHARACTERISTICS LAB
+        // Uses the real Shockley diode equation (I = Is*(exp(V/(n*Vt)) - 1))
+        // with material-specific Is/n tuned so the knee lands at the expected
+        // ~0.7V (Silicon) / ~0.3V (Germanium), rather than a fake piecewise
+        // curve - so the shape is physically genuine, just tuned for the
+        // classroom knee-voltage values.
+        // =====================================================================
+        const DIODE_MATERIALS = {
+            SILICON: { label: 'Silicon', knee: 0.7, Is: 5e-14, n: 1, color: '#fb923c' },
+            GERMANIUM: { label: 'Germanium', knee: 0.3, Is: 2.4e-7, n: 1, color: '#38bdf8' }
+        };
+        let diodeMaterial = 'SILICON';
+        const DIODE_VT = 0.026;      // thermal voltage at room temp (V)
+        const DIODE_COMPLIANCE_A = 0.025; // 25mA display cap, like a real current-limited bench setup
+
+        function diodeCurrentAmps(V, mat) {
+            const m = DIODE_MATERIALS[mat];
+            let I = m.Is * (Math.exp(V / (m.n * DIODE_VT)) - 1);
+            if (I > DIODE_COMPLIANCE_A) I = DIODE_COMPLIANCE_A;
+            if (I < -m.Is) I = -m.Is; // reverse saturation floor
+            return I;
+        }
+
+        function openDiodeLab() {
+            document.getElementById('diode-vi-modal').classList.remove('hidden');
+            callTeacherAssistant('Experiment_Overview', 'V-I Characteristics of a PN Junction Diode');
+            requestAnimationFrame(() => { if (typeof initDiodeLab === 'function') initDiodeLab(); });
+        }
+
+        function closeDiodeLab() {
+            document.getElementById('diode-vi-modal').classList.add('hidden');
+        }
+
+        function setDiodeMaterial(mat, btnEl) {
+            diodeMaterial = mat;
+            document.querySelectorAll('.diode-mat-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            if (typeof diodeRedraw === 'function') diodeRedraw();
+        }
+
+        let diodeRedraw = null;
+        let diodeLabBound = false;
+
+        function initDiodeLab() {
+            const depletionCanvas = document.getElementById('depletion-canvas');
+            const ivCanvas = document.getElementById('diode-iv-canvas');
+            const slider = document.getElementById('diode-voltage-slider');
+            if (!depletionCanvas || !ivCanvas || !slider) return;
+            const dctx = depletionCanvas.getContext('2d');
+            const ictx = ivCanvas.getContext('2d');
+
+            function drawDepletionRegion(V, mat) {
+                const w = depletionCanvas.width, h = depletionCanvas.height;
+                dctx.clearRect(0, 0, w, h);
+                const m = DIODE_MATERIALS[mat];
+
+                // Depletion width: wide in reverse bias, shrinks toward the
+                // knee, collapses to ~0 once past the knee voltage.
+                const baseFrac = 0.32;
+                let widthFrac;
+                if (V < 0) {
+                    widthFrac = Math.min(0.5, baseFrac + 0.06 * Math.abs(V));
+                } else {
+                    widthFrac = Math.max(0.015, baseFrac * (1 - V / m.knee));
+                }
+                const gap = widthFrac * w;
+                const centerX = w / 2;
+                const pWidth = centerX - gap / 2;
+                const nStart = centerX + gap / 2;
+
+                // P-region (left)
+                dctx.fillStyle = '#4a1f1f';
+                dctx.fillRect(0, 0, pWidth, h);
+                dctx.fillStyle = '#f87171';
+                dctx.font = 'bold 13px monospace';
+                dctx.fillText('P', 14, 24);
+                // '+' holes scattered
+                dctx.font = '11px monospace';
+                for (let i = 0; i < 10; i++) {
+                    const hx = 8 + (i % 5) * (pWidth / 6);
+                    const hy = 40 + Math.floor(i / 5) * 100;
+                    if (hx < pWidth - 6) dctx.fillText('+', hx, hy);
+                }
+
+                // N-region (right)
+                dctx.fillStyle = '#1f2a4a';
+                dctx.fillRect(nStart, 0, w - nStart, h);
+                dctx.fillStyle = '#60a5fa';
+                dctx.font = 'bold 13px monospace';
+                dctx.fillText('N', w - 26, 24);
+                dctx.font = '11px monospace';
+                for (let i = 0; i < 10; i++) {
+                    const hx = nStart + 10 + (i % 5) * ((w - nStart) / 6);
+                    const hy = 40 + Math.floor(i / 5) * 100;
+                    if (hx < w - 10) dctx.fillText('−', hx, hy);
+                }
+
+                // Depletion region (barrier)
+                if (gap > 1) {
+                    dctx.fillStyle = 'rgba(226, 232, 240, 0.15)';
+                    dctx.fillRect(pWidth, 0, gap, h);
+                    dctx.strokeStyle = '#e2e8f0';
+                    dctx.setLineDash([4, 3]);
+                    dctx.strokeRect(pWidth, 2, gap, h - 4);
+                    dctx.setLineDash([]);
+                }
+
+                // Current-flow arrow once the barrier has mostly collapsed
+                if (V >= m.knee * 0.85 && V > 0) {
+                    dctx.strokeStyle = '#4ade80';
+                    dctx.lineWidth = 2;
+                    dctx.beginPath();
+                    dctx.moveTo(20, h - 20);
+                    dctx.lineTo(w - 20, h - 20);
+                    dctx.stroke();
+                    dctx.beginPath();
+                    dctx.moveTo(w - 28, h - 26);
+                    dctx.lineTo(w - 20, h - 20);
+                    dctx.lineTo(w - 28, h - 14);
+                    dctx.stroke();
+                    dctx.fillStyle = '#4ade80';
+                    dctx.font = 'bold 10px monospace';
+                    dctx.fillText('CURRENT FLOWING', w / 2 - 55, h - 26);
+                }
+
+                // Status caption
+                const statusEl = document.getElementById('depletion-status');
+                if (statusEl) {
+                    if (V < 0) {
+                        statusEl.textContent = 'Reverse Biased - Barrier WIDE - Blocked (~0 mA)';
+                        statusEl.style.color = '#f87171';
+                    } else if (V < m.knee) {
+                        statusEl.textContent = `Forward, Below Knee - Barrier Shrinking - Current Extremely Low`;
+                        statusEl.style.color = '#fbbf24';
+                    } else {
+                        statusEl.textContent = 'Forward, Past Knee - Barrier COLLAPSED - Current Shoots Up!';
+                        statusEl.style.color = '#4ade80';
+                    }
+                }
+            }
+
+            function drawIVCurve(V, mat) {
+                const w = ivCanvas.width, h = ivCanvas.height;
+                ictx.clearRect(0, 0, w, h);
+                const m = DIODE_MATERIALS[mat];
+
+                const vMin = -2, vMax = 1;
+                const iMaxMa = DIODE_COMPLIANCE_A * 1000; // 25 mA
+                const originX = w * ((0 - vMin) / (vMax - vMin));
+                const originY = h * 0.85;
+
+                // Grid
+                ictx.strokeStyle = 'rgba(148,163,184,0.15)';
+                ictx.lineWidth = 1;
+                for (let gx = 0; gx <= w; gx += w / 10) { ictx.beginPath(); ictx.moveTo(gx, 0); ictx.lineTo(gx, h); ictx.stroke(); }
+                for (let gy = 0; gy <= h; gy += h / 8) { ictx.beginPath(); ictx.moveTo(0, gy); ictx.lineTo(w, gy); ictx.stroke(); }
+
+                // Axes
+                ictx.strokeStyle = 'rgba(226,232,240,0.5)';
+                ictx.lineWidth = 1.5;
+                ictx.beginPath(); ictx.moveTo(0, originY); ictx.lineTo(w, originY); ictx.stroke(); // V axis
+                ictx.beginPath(); ictx.moveTo(originX, 0); ictx.lineTo(originX, h); ictx.stroke(); // I axis
+                ictx.fillStyle = '#94a3b8';
+                ictx.font = '10px monospace';
+                ictx.fillText('V', w - 12, originY - 6);
+                ictx.fillText('I (mA)', originX + 6, 12);
+
+                // Curve
+                ictx.strokeStyle = m.color;
+                ictx.lineWidth = 2;
+                ictx.beginPath();
+                for (let px = 0; px <= w; px++) {
+                    const vPoint = vMin + (px / w) * (vMax - vMin);
+                    const iMa = diodeCurrentAmps(vPoint, mat) * 1000;
+                    const py = originY - (iMa / iMaxMa) * (h * 0.75);
+                    if (px === 0) ictx.moveTo(px, py); else ictx.lineTo(px, py);
+                }
+                ictx.stroke();
+
+                // Knee marker
+                const kneeX = w * ((m.knee - vMin) / (vMax - vMin));
+                ictx.strokeStyle = 'rgba(226,232,240,0.3)';
+                ictx.setLineDash([3, 3]);
+                ictx.beginPath(); ictx.moveTo(kneeX, 0); ictx.lineTo(kneeX, h); ictx.stroke();
+                ictx.setLineDash([]);
+                ictx.fillStyle = '#94a3b8';
+                ictx.fillText(`Vγ=${m.knee}V`, kneeX + 4, h - 6);
+
+                // Live glowing amber dot at the current bias point
+                const dotIma = diodeCurrentAmps(V, mat) * 1000;
+                const dotX = w * ((V - vMin) / (vMax - vMin));
+                const dotY = originY - (dotIma / iMaxMa) * (h * 0.75);
+                const glow = ictx.createRadialGradient(dotX, dotY, 0, dotX, dotY, 10);
+                glow.addColorStop(0, 'rgba(251, 191, 36, 1)');
+                glow.addColorStop(1, 'rgba(251, 191, 36, 0)');
+                ictx.fillStyle = glow;
+                ictx.beginPath(); ictx.arc(dotX, dotY, 10, 0, Math.PI * 2); ictx.fill();
+                ictx.fillStyle = '#fbbf24';
+                ictx.beginPath(); ictx.arc(dotX, dotY, 4, 0, Math.PI * 2); ictx.fill();
+
+                // Readouts
+                document.getElementById('diode-vd-readout').textContent = `${V.toFixed(2)} V`;
+                document.getElementById('diode-id-readout').textContent = `${dotIma.toFixed(3)} mA`;
+            }
+
+            function redraw() {
+                const V = parseFloat(slider.value);
+                document.getElementById('diode-voltage-label').textContent = V.toFixed(2);
+                drawDepletionRegion(V, diodeMaterial);
+                drawIVCurve(V, diodeMaterial);
+            }
+
+            diodeRedraw = redraw;
+            if (!diodeLabBound) {
+                diodeLabBound = true;
+                slider.addEventListener('input', redraw);
+            }
+            redraw();
         }
 
         // --- SIDEBAR TOGGLE LOGIC ---
